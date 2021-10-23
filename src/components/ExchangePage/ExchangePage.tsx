@@ -7,6 +7,7 @@ import ExchangeRates from '../../models/ExchangeRates';
 import convertRate from '../../utils/ConvertRate';
 import { formatAmount } from '../../utils/FormatAmount';
 import CurrencyInput from '../CurrencyInput/CurrencyInput';
+import { ExchangeRate } from './style';
 
 function ExchangePage() {
     let operation: 'buy' | 'sell' = 'sell';
@@ -43,10 +44,10 @@ function ExchangePage() {
     return (
         <div>
             <h1>{t(operation)} PLN</h1>
-            <div>
+            <ExchangeRate>
                 {fromCurrency.format(1)} ={' '}
                 {toCurrency.format(exchangeRates.PLN)}
-            </div>
+            </ExchangeRate>
             <CurrencyInput
                 currency={fromCurrency}
                 balance={fromBalance}

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import Currency from '../../models/Currency';
-import { Input } from './style';
+import { BottomLine, Input, TopLine, Wrapper } from './style';
 
 type CurrencyInputProps = {
     currency: Currency;
@@ -18,18 +18,20 @@ function CurrencyInput({
     const { t } = useTranslation();
 
     return (
-        <div>
-            <span>{currency.code}</span>
-            <Input
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                type="number"
-                placeholder="0"
-            />
-            <div>
+        <Wrapper>
+            <TopLine>
+                <span>{currency.code}</span>
+                <Input
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
+                    type="number"
+                    placeholder="0"
+                />
+            </TopLine>
+            <BottomLine>
                 {t('balance')}: {balance}
-            </div>
-        </div>
+            </BottomLine>
+        </Wrapper>
     );
 }
 

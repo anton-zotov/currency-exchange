@@ -1,10 +1,12 @@
+import i18n from 'i18next';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import 'typeface-roboto';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import en from './i18n/en.json';
+import './style.css';
 
 i18n.use(initReactI18next).init({
     resources: {
