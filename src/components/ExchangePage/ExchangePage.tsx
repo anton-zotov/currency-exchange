@@ -60,13 +60,22 @@ function ExchangePage() {
     return (
         <>
             <Page>
-                <Title>{t(operation)} PLN</Title>
+                <Title>
+                    {t(operation)} {fromCurrency.code}
+                </Title>
                 <ExchangeRate>
                     <IconWrapper>
                         <AiOutlineLineChart />
                     </IconWrapper>
                     {fromCurrency.format(1)} ={' '}
-                    {toCurrency.format(exchangeRates.PLN)}
+                    {toCurrency.format(
+                        convertRate(
+                            1,
+                            fromCurrency,
+                            toCurrency,
+                            exchangeRates as ExchangeRates
+                        )
+                    )}
                 </ExchangeRate>
                 <CurrencyInput
                     currency={fromCurrency}

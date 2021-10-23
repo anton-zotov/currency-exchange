@@ -8,7 +8,7 @@ function convertRate(
     exchangeRates: ExchangeRates
 ) {
     const amountUSD = amount / exchangeRates[from.code];
-    return amountUSD * exchangeRates[to.code];
+    return (amountUSD * exchangeRates[to.code]).toFixed(4);
 }
 
 export default convertRate;
