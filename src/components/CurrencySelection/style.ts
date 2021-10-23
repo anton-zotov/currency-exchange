@@ -6,10 +6,34 @@ export const CurrencyItem = styled.li`
 `;
 
 export const LogoWrapper = styled.div`
-    flex: 80px 0 0;
+    flex: 38px 0 0;
     padding-right: 20px;
 `;
 
 export const Logo = styled.img`
     width: 100%;
+    border-radius: 100%;
+`;
+
+export const Wrapper = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100wh;
+    padding: 20px;
+    background-color: black;
+    color: #c0c0c0;
+`;
+
+export const Header = styled.h2`
+    display: flex;
+    padding-bottom: 30px;
+`;
+
+export const IconWrapper = styled.span`
+    display: flex;
+    align-items: center;
+    height: 27px;
+    margin-right: 16px;
 `;

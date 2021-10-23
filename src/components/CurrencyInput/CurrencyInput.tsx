@@ -15,6 +15,7 @@ type CurrencyInputProps = {
     balance: number;
     value: string;
     onChange: (value: string) => void;
+    onCurrencyClick: () => void;
 };
 
 function CurrencyInput({
@@ -22,13 +23,14 @@ function CurrencyInput({
     currency,
     value,
     onChange,
+    onCurrencyClick,
 }: CurrencyInputProps) {
     const { t } = useTranslation();
 
     return (
         <Wrapper>
             <TopLine>
-                <CurrencyCode>
+                <CurrencyCode onClick={onCurrencyClick}>
                     {currency.code}
                     <IconWrapper>
                         <MdKeyboardArrowDown />

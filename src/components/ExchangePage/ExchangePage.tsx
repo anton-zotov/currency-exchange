@@ -8,12 +8,15 @@ import ExchangeRates from '../../models/ExchangeRates';
 import convertRate from '../../utils/ConvertRate';
 import { formatAmount } from '../../utils/FormatAmount';
 import CurrencyInput from '../CurrencyInput/CurrencyInput';
+import CurrencySelection from '../CurrencySelection/CurrencySelection';
 import { ExchangeRate, IconWrapper, Title } from './style';
 
 function ExchangePage() {
     let operation: 'buy' | 'sell' = 'sell';
     const { t } = useTranslation();
     const exchangeRates = useExchangeRates();
+    const [isCurrencySelectionOpen, setIsCurrencySelectionOpen] =
+        useState(false);
 
     const [fromCurrency, setFromCurrency] = useState(availableCurrencies[1]);
     const [toCurrency, setToCurrency] = useState(availableCurrencies[0]);
@@ -38,6 +41,10 @@ function ExchangePage() {
         setToValue(formattedToValue);
     }
 
+    function handleCurrencyClick() {
+        setIsCurrencySelectionOpen(true);
+    }
+
     if (!exchangeRates || !fromBalance || !toBalance) {
         return <div>Loading</div>;
     }
@@ -57,13 +64,21 @@ function ExchangePage() {
                 balance={fromBalance}
                 value={fromValue}
                 onChange={handleFromValueChange}
+                onCurrencyClick={handleCurrencyClick}
             ></CurrencyInput>
             <CurrencyInput
                 currency={toCurrency}
                 balance={toBalance}
                 value={toValue}
                 onChange={setToValue}
+                onCurrencyClick={handleCurrencyClick}
             ></CurrencyInput>
+
+            {isCurrencySelectionOpen && (
+                <CurrencySelection
+                    onClose={() => setIsCurrencySelectionOpen(false)}
+                ></CurrencySelection>
+            )}
         </div>
     );
 }

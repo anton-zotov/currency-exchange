@@ -1,8 +1,20 @@
 import { useTranslation } from 'react-i18next';
+import { IoMdArrowBack } from 'react-icons/io';
 import { availableCurrencies } from '../../config';
-import { CurrencyItem, Logo, LogoWrapper } from './style';
+import {
+    CurrencyItem,
+    Header,
+    IconWrapper,
+    Logo,
+    LogoWrapper,
+    Wrapper,
+} from './style';
 
-function CurrencySelection() {
+type CurrencySelectionProps = {
+    onClose: () => void;
+};
+
+function CurrencySelection({ onClose }: CurrencySelectionProps) {
     const { t } = useTranslation();
     const currencyItems = availableCurrencies.map((currency) => (
         <CurrencyItem key={currency.code}>
@@ -17,12 +29,17 @@ function CurrencySelection() {
     ));
 
     return (
-        <div>
-            <div>{t('choose_source')}</div>
+        <Wrapper>
+            <Header>
+                <IconWrapper onClick={onClose}>
+                    <IoMdArrowBack />
+                </IconWrapper>
+                {t('choose_source')}
+            </Header>
             <div>
                 <ul>{currencyItems}</ul>
             </div>
-        </div>
+        </Wrapper>
     );
 }
 
