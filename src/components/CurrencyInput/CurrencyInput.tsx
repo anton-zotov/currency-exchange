@@ -1,6 +1,14 @@
 import { useTranslation } from 'react-i18next';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 import Currency from '../../models/Currency';
-import { BottomLine, CurrencyCode, Input, TopLine, Wrapper } from './style';
+import {
+    BottomLine,
+    CurrencyCode,
+    IconWrapper,
+    Input,
+    TopLine,
+    Wrapper,
+} from './style';
 
 type CurrencyInputProps = {
     currency: Currency;
@@ -20,7 +28,12 @@ function CurrencyInput({
     return (
         <Wrapper>
             <TopLine>
-                <CurrencyCode>{currency.code}</CurrencyCode>
+                <CurrencyCode>
+                    {currency.code}
+                    <IconWrapper>
+                        <MdKeyboardArrowDown />
+                    </IconWrapper>
+                </CurrencyCode>
                 <Input
                     value={value}
                     onChange={(e) => onChange(e.target.value)}

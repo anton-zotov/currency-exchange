@@ -28,6 +28,14 @@ export const BottomLine = styled.div`
 `;
 
 export const CurrencyCode = styled.span`
+    display: flex;
     font-size: 18px;
     font-weight: bold;
+`;
+
+export const IconWrapper = styled.span`
+    display: flex;
+    align-items: center;
+    height: 20px;
+    padding-left: 6px;
 `;

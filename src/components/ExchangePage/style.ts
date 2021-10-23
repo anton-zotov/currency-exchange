@@ -10,7 +10,7 @@ export const Title = styled.h1`
     color: #c0c0c0;
 `;
 
-export const IconContainer = styled.span`
+export const IconWrapper = styled.span`
     display: flex;
     align-items: center;
     height: 19px;

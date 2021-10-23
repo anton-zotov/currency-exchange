@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconContext } from 'react-icons';
-import { GrLineChart } from 'react-icons/gr';
 import { AiOutlineLineChart } from 'react-icons/ai';
 import { availableCurrencies } from '../../config';
 import useBalance from '../../hooks/useBalance';
@@ -10,7 +8,7 @@ import ExchangeRates from '../../models/ExchangeRates';
 import convertRate from '../../utils/ConvertRate';
 import { formatAmount } from '../../utils/FormatAmount';
 import CurrencyInput from '../CurrencyInput/CurrencyInput';
-import { ExchangeRate, IconContainer, Title } from './style';
+import { ExchangeRate, IconWrapper, Title } from './style';
 
 function ExchangePage() {
     let operation: 'buy' | 'sell' = 'sell';
@@ -48,9 +46,9 @@ function ExchangePage() {
         <div>
             <Title>{t(operation)} PLN</Title>
             <ExchangeRate>
-                <IconContainer>
+                <IconWrapper>
                     <AiOutlineLineChart />
-                </IconContainer>
+                </IconWrapper>
                 {fromCurrency.format(1)} ={' '}
                 {toCurrency.format(exchangeRates.PLN)}
             </ExchangeRate>
