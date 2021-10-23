@@ -7,7 +7,7 @@ export const CurrencyItem = styled.li`
 `;
 
 export const LogoWrapper = styled.div`
-    flex: 38px 0 0;
+    flex: 34px 0 0;
     padding-right: 20px;
 `;
 
@@ -30,7 +30,8 @@ export const Wrapper = styled.div`
 
 export const Header = styled.h2`
     display: flex;
-    padding-bottom: 30px;
+    height: 28px;
+    margin-bottom: 20px;
 `;
 
 export const IconWrapper = styled.span`
@@ -39,4 +40,23 @@ export const IconWrapper = styled.span`
     height: 27px;
     padding-right: 16px;
     cursor: pointer;
+`;
+
+export const Seach = styled.input`
+    width: 100vw;
+    padding-left: 6px;
+    background-color: transparent;
+    border: none;
+    color: #c0c0c0;
+    font-size: 16px;
+`;
+
+export const SeachLabel = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+`;
+
+export const CurrencyLabel = styled.div`
+    font-size: 12px;
 `;

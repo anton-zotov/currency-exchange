@@ -24,7 +24,6 @@ function ExchangePage() {
         typeof setFromCurrency | null
     >(null);
 
-    console.log('fromCurrency', fromCurrency);
     const fromBalance = useBalance(fromCurrency);
     const toBalance = useBalance(toCurrency);
 

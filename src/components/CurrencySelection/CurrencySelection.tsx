@@ -1,14 +1,20 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { IoMdArrowBack } from 'react-icons/io';
 import { Page } from '../../common-styles/page';
 import { availableCurrencies } from '../../config';
 import Currency from '../../models/Currency';
+import { filterCurrencies } from '../../utils/FilterCurrencies';
 import {
     CurrencyItem,
+    CurrencyLabel,
     Header,
     IconWrapper,
     Logo,
     LogoWrapper,
+    Seach,
+    SeachLabel,
     Wrapper,
 } from './style';
 
@@ -19,17 +25,36 @@ type CurrencySelectionProps = {
 
 function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
     const { t } = useTranslation();
-    const currencyItems = availableCurrencies.map((currency) => (
-        <CurrencyItem key={currency.code} onClick={() => onSelect(currency)}>
-            <LogoWrapper>
-                <Logo src={`/img/${currency.code.toLowerCase()}.svg`} />
-            </LogoWrapper>
-            <div>
-                <div>{t(`currency.${currency.label}`)}</div>
-                <div>{currency.code}</div>
-            </div>
-        </CurrencyItem>
-    ));
+    const [query, setQuery] = useState('');
+    const [isSearchFocused, setIsSearchFocused] = useState(true);
+
+    function handleBlur() {
+        setIsSearchFocused(false);
+
+        // delay to avoid briefly showing the full list on currency select
+        setTimeout(() => {
+            setQuery('');
+        }, 100);
+    }
+
+    const currencyItems = availableCurrencies
+        .filter(filterCurrencies(query, t))
+        .map((currency) => (
+            <CurrencyItem
+                key={currency.code}
+                onClick={() => onSelect(currency)}
+            >
+                <LogoWrapper>
+                    <Logo src={`/img/${currency.code.toLowerCase()}.svg`} />
+                </LogoWrapper>
+                <div>
+                    <div>{currency.code}</div>
+                    <CurrencyLabel>
+                        {t(`currency.${currency.label}`)}
+                    </CurrencyLabel>
+                </div>
+            </CurrencyItem>
+        ));
 
     return (
         <Wrapper>
@@ -38,7 +63,24 @@ function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
                     <IconWrapper onClick={onClose}>
                         <IoMdArrowBack />
                     </IconWrapper>
-                    {t('choose_source')}
+                    {!isSearchFocused && (
+                        <SeachLabel>
+                            {t('choose_source')}
+                            <IconWrapper>
+                                <AiOutlineSearch
+                                    onClick={() => setIsSearchFocused(true)}
+                                />
+                            </IconWrapper>
+                        </SeachLabel>
+                    )}
+                    {isSearchFocused && (
+                        <Seach
+                            value={query}
+                            onBlur={handleBlur}
+                            onChange={(e) => setQuery(e.target.value)}
+                            autoFocus={true}
+                        ></Seach>
+                    )}
                 </Header>
                 <div>
                     <ul>{currencyItems}</ul>
