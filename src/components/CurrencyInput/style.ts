@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Input = styled.input`
     flex-grow: 1;
-    margin-left: 10px;
+    width: 100%;
+    padding-left: 10px;
     text-align: right;
     background-color: transparent;
     border: none;
@@ -31,6 +32,7 @@ export const CurrencyCode = styled.span`
     display: flex;
     font-size: 18px;
     font-weight: bold;
+    cursor: pointer;
 `;
 
 export const IconWrapper = styled.span`

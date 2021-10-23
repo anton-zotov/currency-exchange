@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { IoMdArrowBack } from 'react-icons/io';
+import { Page } from '../../common-styles/page';
 import { availableCurrencies } from '../../config';
+import Currency from '../../models/Currency';
 import {
     CurrencyItem,
     Header,
@@ -12,12 +14,13 @@ import {
 
 type CurrencySelectionProps = {
     onClose: () => void;
+    onSelect: (currency: Currency) => void;
 };
 
-function CurrencySelection({ onClose }: CurrencySelectionProps) {
+function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
     const { t } = useTranslation();
     const currencyItems = availableCurrencies.map((currency) => (
-        <CurrencyItem key={currency.code}>
+        <CurrencyItem key={currency.code} onClick={() => onSelect(currency)}>
             <LogoWrapper>
                 <Logo src={`/img/${currency.code.toLowerCase()}.svg`} />
             </LogoWrapper>
@@ -30,15 +33,17 @@ function CurrencySelection({ onClose }: CurrencySelectionProps) {
 
     return (
         <Wrapper>
-            <Header>
-                <IconWrapper onClick={onClose}>
-                    <IoMdArrowBack />
-                </IconWrapper>
-                {t('choose_source')}
-            </Header>
-            <div>
-                <ul>{currencyItems}</ul>
-            </div>
+            <Page>
+                <Header>
+                    <IconWrapper onClick={onClose}>
+                        <IoMdArrowBack />
+                    </IconWrapper>
+                    {t('choose_source')}
+                </Header>
+                <div>
+                    <ul>{currencyItems}</ul>
+                </div>
+            </Page>
         </Wrapper>
     );
 }

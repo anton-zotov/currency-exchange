@@ -7,9 +7,3 @@ export const Container = styled.div`
     height: 100vh;
     background-color: #000;
 `;
-
-export const Page = styled.div`
-    width: 100%;
-    max-width: 600px;
-    padding: 20px;
-`;

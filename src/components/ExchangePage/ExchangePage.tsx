@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineLineChart } from 'react-icons/ai';
+import { Page } from '../../common-styles/page';
 import { availableCurrencies } from '../../config';
 import useBalance from '../../hooks/useBalance';
 import useExchangeRates from '../../hooks/useExchangeRates';
+import Currency from '../../models/Currency';
 import ExchangeRates from '../../models/ExchangeRates';
 import convertRate from '../../utils/ConvertRate';
 import { formatAmount } from '../../utils/FormatAmount';
@@ -15,12 +17,14 @@ function ExchangePage() {
     let operation: 'buy' | 'sell' = 'sell';
     const { t } = useTranslation();
     const exchangeRates = useExchangeRates();
-    const [isCurrencySelectionOpen, setIsCurrencySelectionOpen] =
-        useState(false);
 
     const [fromCurrency, setFromCurrency] = useState(availableCurrencies[1]);
     const [toCurrency, setToCurrency] = useState(availableCurrencies[0]);
+    const [changeCurrencyFn, setChangeCurrencyFn] = useState<
+        typeof setFromCurrency | null
+    >(null);
 
+    console.log('fromCurrency', fromCurrency);
     const fromBalance = useBalance(fromCurrency);
     const toBalance = useBalance(toCurrency);
 
@@ -41,8 +45,13 @@ function ExchangePage() {
         setToValue(formattedToValue);
     }
 
-    function handleCurrencyClick() {
-        setIsCurrencySelectionOpen(true);
+    function handleCurrencyClick(changeCurrencyFn: typeof setFromCurrency) {
+        setChangeCurrencyFn(() => changeCurrencyFn);
+    }
+
+    function handleCurrencySelect(currency: Currency) {
+        changeCurrencyFn?.(currency);
+        setChangeCurrencyFn(null);
     }
 
     if (!exchangeRates || !fromBalance || !toBalance) {
@@ -50,36 +59,38 @@ function ExchangePage() {
     }
 
     return (
-        <div>
-            <Title>{t(operation)} PLN</Title>
-            <ExchangeRate>
-                <IconWrapper>
-                    <AiOutlineLineChart />
-                </IconWrapper>
-                {fromCurrency.format(1)} ={' '}
-                {toCurrency.format(exchangeRates.PLN)}
-            </ExchangeRate>
-            <CurrencyInput
-                currency={fromCurrency}
-                balance={fromBalance}
-                value={fromValue}
-                onChange={handleFromValueChange}
-                onCurrencyClick={handleCurrencyClick}
-            ></CurrencyInput>
-            <CurrencyInput
-                currency={toCurrency}
-                balance={toBalance}
-                value={toValue}
-                onChange={setToValue}
-                onCurrencyClick={handleCurrencyClick}
-            ></CurrencyInput>
-
-            {isCurrencySelectionOpen && (
+        <>
+            <Page>
+                <Title>{t(operation)} PLN</Title>
+                <ExchangeRate>
+                    <IconWrapper>
+                        <AiOutlineLineChart />
+                    </IconWrapper>
+                    {fromCurrency.format(1)} ={' '}
+                    {toCurrency.format(exchangeRates.PLN)}
+                </ExchangeRate>
+                <CurrencyInput
+                    currency={fromCurrency}
+                    balance={fromBalance}
+                    value={fromValue}
+                    onChange={handleFromValueChange}
+                    onCurrencyClick={() => handleCurrencyClick(setFromCurrency)}
+                ></CurrencyInput>
+                <CurrencyInput
+                    currency={toCurrency}
+                    balance={toBalance}
+                    value={toValue}
+                    onChange={setToValue}
+                    onCurrencyClick={() => handleCurrencyClick(setToCurrency)}
+                ></CurrencyInput>
+            </Page>
+            {changeCurrencyFn && (
                 <CurrencySelection
-                    onClose={() => setIsCurrencySelectionOpen(false)}
+                    onClose={() => setChangeCurrencyFn(null)}
+                    onSelect={handleCurrencySelect}
                 ></CurrencySelection>
             )}
-        </div>
+        </>
     );
 }
 

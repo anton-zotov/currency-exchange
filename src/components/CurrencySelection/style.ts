@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const CurrencyItem = styled.li`
     display: flex;
     padding: 10px 0;
+    cursor: pointer;
 `;
 
 export const LogoWrapper = styled.div`
@@ -16,12 +17,13 @@ export const Logo = styled.img`
 `;
 
 export const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100wh;
-    padding: 20px;
+    height: 100vh;
     background-color: black;
     color: #c0c0c0;
 `;
@@ -35,5 +37,6 @@ export const IconWrapper = styled.span`
     display: flex;
     align-items: center;
     height: 27px;
-    margin-right: 16px;
+    padding-right: 16px;
+    cursor: pointer;
 `;

@@ -1,13 +1,12 @@
 import React from 'react';
+import { Page } from '../../common-styles/page';
 import ExchangePage from '../ExchangePage/ExchangePage';
-import { Container, Page } from './style';
+import { Container } from './style';
 
 function App() {
     return (
         <Container>
-            <Page>
-                <ExchangePage></ExchangePage>
-            </Page>
+            <ExchangePage></ExchangePage>
         </Container>
     );
 }
