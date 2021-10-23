@@ -6,6 +6,8 @@ export const Input = styled.input`
     text-align: right;
     background-color: transparent;
     border: none;
+    font-size: 18px;
+    color: #c0c0c0;
 `;
 
 export const Wrapper = styled.div`
@@ -23,4 +25,9 @@ export const TopLine = styled.div`
 
 export const BottomLine = styled.div`
     color: #676769;
+`;
+
+export const CurrencyCode = styled.span`
+    font-size: 18px;
+    font-weight: bold;
 `;
