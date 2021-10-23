@@ -18,6 +18,7 @@ export const Wrapper = styled.div`
 export const TopLine = styled.div`
     display: flex;
     margin-bottom: 6px;
+    color: #c0c0c0;
 `;
 
 export const BottomLine = styled.div`
