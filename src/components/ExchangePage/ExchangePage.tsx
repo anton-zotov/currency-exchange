@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { availableCurrencies } from '../../config';
 import useBalance from '../../hooks/useBalance';
 import useExchangeRates from '../../hooks/useExchangeRates';
@@ -6,6 +7,7 @@ import CurrencyInput from '../CurrencyInput/CurrencyInput';
 
 function ExchangePage() {
     let operation: 'buy' | 'sell' = 'sell';
+    const { t } = useTranslation();
     const exchangeRates = useExchangeRates();
 
     const [fromCurrency, setFromCurrency] = useState(availableCurrencies[1]);
@@ -23,7 +25,7 @@ function ExchangePage() {
 
     return (
         <div>
-            <h1>{operation} PLN</h1>
+            <h1>{t(operation)} PLN</h1>
             <div>
                 {fromCurrency.format(1)} ={' '}
                 {toCurrency.format(exchangeRates.PLN)}

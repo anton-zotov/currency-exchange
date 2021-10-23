@@ -1,0 +1,11 @@
+{
+    "buy": "Buy",
+    "sell": "Sell",
+    "choose_source": "Choose source",
+    "currency": {
+        "czech_koruna": "Czech Koruna",
+        "euro": "Euro",
+        "poland_złoty": "Poland Złoty",
+        "united_states_dollar": "United States Dollar"
+    }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { availableCurrencies, openExchangeRatesAppId } from '../config';
+import { availableCurrencies } from '../config';
 import Balance from '../models/Balance';
 import Currency from '../models/Currency';
 

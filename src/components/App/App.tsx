@@ -1,8 +1,9 @@
 import React from 'react';
+import CurrencySelection from '../CurrencySelection/CurrencySelection';
 import ExchangePage from '../ExchangePage/ExchangePage';
 
 function App() {
-    return <ExchangePage></ExchangePage>;
+    return <CurrencySelection></CurrencySelection>;
 }
 
 export default App;
