@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Currency from '../../models/Currency';
 import { Input } from './style';
 
@@ -14,6 +15,8 @@ function CurrencyInput({
     value,
     onChange,
 }: CurrencyInputProps) {
+    const { t } = useTranslation();
+
     return (
         <div>
             <span>{currency.code}</span>
@@ -23,7 +26,9 @@ function CurrencyInput({
                 type="number"
                 placeholder="0"
             />
-            <div>Balance: {balance}</div>
+            <div>
+                {t('balance')}: {balance}
+            </div>
         </div>
     );
 }

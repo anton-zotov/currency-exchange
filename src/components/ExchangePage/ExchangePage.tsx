@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { availableCurrencies } from '../../config';
 import useBalance from '../../hooks/useBalance';
 import useExchangeRates from '../../hooks/useExchangeRates';
+import ExchangeRates from '../../models/ExchangeRates';
+import convertRate from '../../utils/ConvertRate';
+import { formatAmount } from '../../utils/FormatAmount';
 import CurrencyInput from '../CurrencyInput/CurrencyInput';
 
 function ExchangePage() {
@@ -19,6 +22,20 @@ function ExchangePage() {
     const [fromValue, setFromValue] = useState('');
     const [toValue, setToValue] = useState('');
 
+    function handleFromValueChange(newValue: string) {
+        const formattedFromValue = formatAmount(newValue);
+        const convertedValue = convertRate(
+            +formatAmount(newValue),
+            fromCurrency,
+            toCurrency,
+            exchangeRates as ExchangeRates
+        );
+        const formattedToValue = formatAmount(convertedValue);
+
+        setFromValue(formattedFromValue);
+        setToValue(formattedToValue);
+    }
+
     if (!exchangeRates || !fromBalance || !toBalance) {
         return <div>Loading</div>;
     }
@@ -34,7 +51,7 @@ function ExchangePage() {
                 currency={fromCurrency}
                 balance={fromBalance}
                 value={fromValue}
-                onChange={setFromValue}
+                onChange={handleFromValueChange}
             ></CurrencyInput>
             <CurrencyInput
                 currency={toCurrency}
