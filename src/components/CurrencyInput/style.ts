@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Input = styled.input`
     flex-grow: 1;
     width: 100%;
-    padding-left: 10px;
+    padding: 0 8px;
     text-align: right;
     background-color: transparent;
     border: none;
