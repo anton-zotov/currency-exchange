@@ -18,7 +18,7 @@ export const availableCurrencies: Currency[] = [
     },
     {
         code: 'PLN',
-        label: 'poland_złoty',
+        label: 'poland_zloty',
         symbol: 'zł',
         format: getFormatCurrency('left', 1),
     },

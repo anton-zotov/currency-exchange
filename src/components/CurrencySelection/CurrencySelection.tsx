@@ -5,7 +5,7 @@ import { IoMdArrowBack } from 'react-icons/io';
 import { Page } from '../../common-styles/page';
 import { availableCurrencies } from '../../config';
 import Currency from '../../models/Currency';
-import { filterCurrencies } from '../../utils/FilterCurrencies';
+import { filterCurrenciesPredicate } from '../../utils/FilterCurrencies';
 import {
     CurrencyItem,
     CurrencyLabel,
@@ -38,7 +38,7 @@ function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
     }
 
     const currencyItems = availableCurrencies
-        .filter(filterCurrencies(query, t))
+        .filter(filterCurrenciesPredicate(query, t))
         .map((currency) => (
             <CurrencyItem
                 key={currency.code}
