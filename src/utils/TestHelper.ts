@@ -1,12 +1,12 @@
 export type TestCase = {
-    params: [any];
+    params: any[];
     result: any;
 };
 
-export function testResults(cases: TestCase[], fn: (input: any) => any) {
+export function testResults(cases: TestCase[], fn: (a: any, b?: any) => any) {
     cases.forEach(({ params, result }) => {
         it(`returns ${result} when params are ${params}`, () => {
-            expect(fn(...params)).toBe(result);
+            expect(fn(...(params as [any]))).toBe(result);
         });
     });
 }

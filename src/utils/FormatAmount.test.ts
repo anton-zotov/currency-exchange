@@ -1,6 +1,7 @@
 import { formatAmount } from './FormatAmount';
+import { TestCase, testResults } from './TestHelper';
 
-const testSetup: { params: [string]; result: string }[] = [
+const testCases: TestCase[] = [
     { params: [''], result: '' },
     { params: ['0'], result: '0' },
     { params: ['123'], result: '123' },
@@ -10,8 +11,4 @@ const testSetup: { params: [string]; result: string }[] = [
     { params: ['123.456'], result: '123.45' },
 ];
 
-testSetup.forEach(({ params, result }) => {
-    it(`returns ${result} when params are ${params}`, () => {
-        expect(formatAmount(...params)).toBe(result);
-    });
-});
+testResults(testCases, formatAmount);
