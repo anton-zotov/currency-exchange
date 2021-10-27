@@ -14,6 +14,7 @@ export const TopLine = styled.div`
 
 export const CurrencyCode = styled.span`
     display: flex;
+    margin-right: 10px;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
