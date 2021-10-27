@@ -13,7 +13,6 @@ export const Input = styled.input`
 
 export const Wrapper = styled.div`
     padding: 20px;
-    margin-bottom: 8px;
     background-color: #2b2b2d;
     border-radius: 16px;
 `;
