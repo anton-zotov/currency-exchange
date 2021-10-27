@@ -8,11 +8,10 @@ import Currency from '../../models/Currency';
 import { Operation } from '../../models/Operation';
 import CurrencySelection from '../CurrencySelection/CurrencySelection';
 import { InputPair, OperationSwitchWrapper, OperationSwitch } from './style';
-import { AiOutlineLineChart } from 'react-icons/ai';
+import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
 
 // TODO: update exchange rate on currency change
 // TODO: extract colors to file
-// TODO: change icon
 
 type CurrencyInputConfig = {
     balance: number;
@@ -36,7 +35,8 @@ function CurrencyInputPair({
     onOperationChange,
 }: CurrencyInputPairProps) {
     const exchangeRates = useExchangeRates();
-    const [inputBeingChanged, setInputBeingChanged] = useState<CurrencyInputConfig | null>(null);
+    const [inputBeingChanged, setInputBeingChanged] =
+        useState<CurrencyInputConfig | null>(null);
 
     function handleValueChange(
         newValue: string,
@@ -65,7 +65,7 @@ function CurrencyInputPair({
     }
 
     function handleToValueChange(value: string): void {
-        handleValueChange(value, from, to);
+        handleValueChange(value, to, from);
     }
 
     function handleCurrencyClick(input: CurrencyInputConfig) {
@@ -75,7 +75,6 @@ function CurrencyInputPair({
     function handleCurrencySelect(currency: Currency) {
         inputBeingChanged?.onCurrencyChange(currency);
         setInputBeingChanged(null);
-        
     }
 
     return (
@@ -87,13 +86,12 @@ function CurrencyInputPair({
                     value={from.value}
                     sign={operation === Operation.Buy ? '+' : '-'}
                     onChange={handleFromValueChange}
-                    onCurrencyClick={() =>
-                        handleCurrencyClick(from)
-                    }
+                    onCurrencyClick={() => handleCurrencyClick(from)}
                 ></CurrencyInput>
                 <OperationSwitchWrapper>
                     <OperationSwitch onClick={() => onOperationChange()}>
-                        <AiOutlineLineChart />
+                        {operation === Operation.Buy && <BsArrowUp />}
+                        {operation === Operation.Sell && <BsArrowDown />}
                     </OperationSwitch>
                 </OperationSwitchWrapper>
                 <CurrencyInput
@@ -102,9 +100,7 @@ function CurrencyInputPair({
                     value={to.value}
                     sign={operation === Operation.Sell ? '+' : '-'}
                     onChange={handleToValueChange}
-                    onCurrencyClick={() =>
-                        handleCurrencyClick(to)
-                    }
+                    onCurrencyClick={() => handleCurrencyClick(to)}
                 ></CurrencyInput>
             </InputPair>
             {inputBeingChanged && (
