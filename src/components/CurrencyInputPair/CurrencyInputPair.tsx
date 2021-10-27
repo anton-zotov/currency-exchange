@@ -38,6 +38,11 @@ function CurrencyInputPair({
     const [inputBeingChanged, setInputBeingChanged] =
         useState<CurrencyInputConfig | null>(null);
 
+    const isFromBalanceExceeded =
+        operation === Operation.Sell && +from.value > from.balance;
+    const isToBalanceExceeded =
+        operation === Operation.Buy && +to.value > to.balance;
+
     function handleValueChange(
         newValue: string,
         srcInput: CurrencyInputConfig,
@@ -83,6 +88,7 @@ function CurrencyInputPair({
                 <CurrencyInput
                     currency={from.currency}
                     balance={from.balance}
+                    isBalanceExceeded={isFromBalanceExceeded}
                     value={from.value}
                     sign={operation === Operation.Buy ? '+' : '-'}
                     onChange={handleFromValueChange}
@@ -97,6 +103,7 @@ function CurrencyInputPair({
                 <CurrencyInput
                     currency={to.currency}
                     balance={to.balance}
+                    isBalanceExceeded={isToBalanceExceeded}
                     value={to.value}
                     sign={operation === Operation.Sell ? '+' : '-'}
                     onChange={handleToValueChange}

@@ -5,6 +5,7 @@ import { prettifyNumber, validateNumber } from '../../utils/NumberInput';
 import {
     BottomLine,
     CurrencyCode,
+    Error,
     IconWrapper,
     Input,
     TopLine,
@@ -12,19 +13,21 @@ import {
 } from './style';
 
 type CurrencyInputProps = {
-    currency: Currency;
     balance: number;
-    value: string;
+    currency: Currency;
+    isBalanceExceeded: boolean;
     sign: string;
+    value: string;
     onChange: (value: string) => void;
     onCurrencyClick: () => void;
 };
 
 function CurrencyInput({
-    balance,
     currency,
-    value,
+    balance,
+    isBalanceExceeded,
     sign,
+    value,
     onChange,
     onCurrencyClick,
 }: CurrencyInputProps) {
@@ -46,7 +49,7 @@ function CurrencyInput({
     }
 
     return (
-        <Wrapper>
+        <Wrapper hasError={isBalanceExceeded}>
             <TopLine>
                 <CurrencyCode onClick={onCurrencyClick}>
                     {currency.code}
@@ -61,7 +64,10 @@ function CurrencyInput({
                 />
             </TopLine>
             <BottomLine>
-                {t('balance')}: {balance}
+                <span>
+                    {t('balance')}: {balance}
+                </span>
+                {isBalanceExceeded && <Error>{t('exceed_balance')}</Error>}
             </BottomLine>
         </Wrapper>
     );
