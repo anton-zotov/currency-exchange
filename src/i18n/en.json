@@ -1,6 +1,7 @@
 {
     "balance": "Balance",
     "buy": "Buy",
+    "buy_with": "Buy {{curOne}} with {{curTwo}}",
     "choose_source": "Choose source",
     "currency": {
         "czech_koruna": "Czech Koruna",
@@ -9,5 +10,6 @@
         "united_states_dollar": "United States Dollar"
     },
     "exceed_balance": "Exceed balance",
-    "sell": "Sell"
+    "sell": "Sell",
+    "sell_to": "Sell {{curOne}} to {{curTwo}}"
 }

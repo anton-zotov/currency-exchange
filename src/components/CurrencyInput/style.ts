@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div<{ hasError: boolean }>`
     padding: 20px;
-    background-color: ${(props) => (props.hasError ? '#42120e' : '#2b2b2d')};
+    background-color: ${({ hasError }) => (hasError ? '#42120e' : '#2b2b2d')};
     border-radius: 16px;
 `;
 

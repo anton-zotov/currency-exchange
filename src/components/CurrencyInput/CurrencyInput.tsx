@@ -15,7 +15,6 @@ import {
 type CurrencyInputProps = {
     balance: number;
     currency: Currency;
-    isBalanceExceeded: boolean;
     sign: string;
     value: string;
     onChange: (value: string) => void;
@@ -25,13 +24,13 @@ type CurrencyInputProps = {
 function CurrencyInput({
     currency,
     balance,
-    isBalanceExceeded,
     sign,
     value,
     onChange,
     onCurrencyClick,
 }: CurrencyInputProps) {
     const { t } = useTranslation();
+    const isBalanceExceeded = sign === '-' && +value > balance;
 
     function removeSign(s: string) {
         if (s.startsWith('-') || s.startsWith('+')) {
