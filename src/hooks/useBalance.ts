@@ -3,21 +3,38 @@ import { availableCurrencies } from '../config';
 import Balance from '../models/Balance';
 import Currency from '../models/Currency';
 
-function useBalance(currency: Currency): number | null {
+function useBalance(
+    currency: Currency
+): [number | null, (amount: number, currency: Currency) => void] {
     const [balance, setBalance] = useState<Balance | null>(null);
 
     useEffect(() => {
-        const balance = availableCurrencies.reduce(
+        const newBalance = availableCurrencies.reduce(
             (acc, currency) => ({
                 ...acc,
                 [currency.code]: Math.floor(Math.random() * 100000) / 100,
             }),
             {}
         );
-        setBalance(balance);
+        setBalance(balance => {
+            return newBalance
+        });
     }, []);
 
-    return balance ? balance[currency.code] : null;
+    function modifyBalance(amount: number, currency: Currency) {
+        setBalance((balance) => {
+            if (!balance || balance[currency.code] === null) {
+                throw new Error('balance is null');
+            }
+
+            return {
+                ...balance,
+                [currency.code]: balance[currency.code] + amount,
+            };
+        });
+    }
+
+    return [balance ? balance[currency.code] : null, modifyBalance];
 }
 
 export default useBalance;

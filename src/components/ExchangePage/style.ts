@@ -27,12 +27,18 @@ export const IconWrapper = styled.span`
 
 export const BottomSection = styled.div``;
 
-export const ExchangeButton = styled.button<{ isInvalid: boolean }>`
+export const ExchangeButton = styled.button`
     width: 100%;
     padding: 16px;
     border: none;
     border-radius: 20px;
-    color: ${({ isInvalid }) => (isInvalid ? '#c0c0c0' : '#fff')};
-    background-color: ${({ isInvalid }) => (isInvalid ? '#021a34' : '#0a84ff')};
-    cursor: ${({ isInvalid }) => (isInvalid ? 'default' : 'pointer')};
+    color: #fff;
+    background-color: #0a84ff;
+    cursor: pointer;
+
+    &:disabled {
+        color: #c0c0c0;
+        background-color: #021a34;
+        cursor: default;
+    }
 `;

@@ -18,6 +18,7 @@ import {
 import { Operation } from '../../models/Operation';
 import CurrencyInputPair from '../CurrencyInputPair/CurrencyInputPair';
 import { AiOutlineLineChart } from 'react-icons/ai';
+import { useExchange } from '../../hooks/useExchange';
 
 // TODO: update exchange rate on currency change
 // TODO: add loading screen
@@ -33,8 +34,14 @@ function ExchangePage() {
     const [fromCurrency, setFromCurrency] = useState(availableCurrencies[1]);
     const [toCurrency, setToCurrency] = useState(availableCurrencies[0]);
 
-    const fromBalance = useBalance(fromCurrency);
-    const toBalance = useBalance(toCurrency);
+    const buyingCurrency =
+        operation === Operation.Buy ? fromCurrency : toCurrency;
+    const sellingCurrency =
+        operation === Operation.Sell ? fromCurrency : toCurrency;
+    const commitExchange = useExchange(buyingCurrency, sellingCurrency);
+
+    const [fromBalance] = useBalance(fromCurrency);
+    const [toBalance] = useBalance(toCurrency);
 
     const isFromBalanceExceeded =
         operation === Operation.Sell && +fromValue > (fromBalance || 0);
@@ -46,6 +53,10 @@ function ExchangePage() {
         const newOperation =
             operation === Operation.Buy ? Operation.Sell : Operation.Buy;
         setOperation(newOperation);
+    }
+
+    function exchange() {
+        commitExchange(+fromValue);
     }
 
     if (!exchangeRates || !fromBalance || !toBalance) {
@@ -94,7 +105,10 @@ function ExchangePage() {
                         ></CurrencyInputPair>
                     </TopSection>
                     <BottomSection>
-                        <ExchangeButton isInvalid={isBalanceExceeded}>
+                        <ExchangeButton
+                            disabled={isBalanceExceeded}
+                            onClick={exchange}
+                        >
                             {t(
                                 operation === Operation.Buy
                                     ? 'buy_with'
