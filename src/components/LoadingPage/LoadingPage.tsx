@@ -1,18 +1,25 @@
 import { availableCurrencies } from '../../config';
 import useBalance from '../../hooks/useBalance';
+import { BalanceContext } from '../../utils/Contexts';
 
 type LoadingPageProps = {
     children?: React.ReactNode;
 };
 
 function LoadingPage({ children }: LoadingPageProps) {
-    const [balance] = useBalance(availableCurrencies[0]);
+    const [isLoading, getBalance, modifyBalance] = useBalance(
+        availableCurrencies[0]
+    );
 
-    if (!balance) {
+    if (isLoading) {
         return <div>Loading...</div>;
     }
 
-    return <>{children}</>;
+    return (
+        <BalanceContext.Provider value={[getBalance, modifyBalance]}>
+            {children}
+        </BalanceContext.Provider>
+    );
 }
 
 export default LoadingPage;

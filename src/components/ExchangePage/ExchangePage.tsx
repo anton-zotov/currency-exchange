@@ -19,9 +19,12 @@ import { Operation } from '../../models/Operation';
 import CurrencyInputPair from '../CurrencyInputPair/CurrencyInputPair';
 import { AiOutlineLineChart } from 'react-icons/ai';
 import { useExchange } from '../../hooks/useExchange';
+import { useContext } from 'react';
+import { BalanceContext } from '../../utils/Contexts';
 
 // TODO: update exchange rate on currency change
 // TODO: add loading screen
+// TODO: store balance as whole numbers
 
 function ExchangePage() {
     const { t } = useTranslation();
@@ -34,14 +37,15 @@ function ExchangePage() {
     const [fromCurrency, setFromCurrency] = useState(availableCurrencies[1]);
     const [toCurrency, setToCurrency] = useState(availableCurrencies[0]);
 
+    const [getBalance, modifyBalance] = useContext(BalanceContext);
+    const fromBalance = getBalance?.(fromCurrency);
+    const toBalance = getBalance?.(toCurrency);
+
     const buyingCurrency =
         operation === Operation.Buy ? fromCurrency : toCurrency;
     const sellingCurrency =
         operation === Operation.Sell ? fromCurrency : toCurrency;
-    const commitExchange = useExchange(buyingCurrency, sellingCurrency);
-
-    const [fromBalance] = useBalance(fromCurrency);
-    const [toBalance] = useBalance(toCurrency);
+    const commitExchange = useExchange(buyingCurrency, sellingCurrency, modifyBalance);
 
     const isFromBalanceExceeded =
         operation === Operation.Sell && +fromValue > (fromBalance || 0);

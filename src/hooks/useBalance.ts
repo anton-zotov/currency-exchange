@@ -5,7 +5,11 @@ import Currency from '../models/Currency';
 
 function useBalance(
     currency: Currency
-): [number | null, (amount: number, currency: Currency) => void] {
+): [
+    boolean,
+    (currency: Currency) => number | null,
+    (amount: number, currency: Currency) => void
+] {
     const [balance, setBalance] = useState<Balance | null>(null);
 
     useEffect(() => {
@@ -16,8 +20,8 @@ function useBalance(
             }),
             {}
         );
-        setBalance(balance => {
-            return newBalance
+        setBalance((balance) => {
+            return newBalance;
         });
     }, []);
 
@@ -34,7 +38,10 @@ function useBalance(
         });
     }
 
-    return [balance ? balance[currency.code] : null, modifyBalance];
+    const getBalance = (currency: Currency) =>
+        balance ? balance[currency.code] : null;
+
+    return [!balance, getBalance, modifyBalance];
 }
 
 export default useBalance;
