@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import useExchangeRates from '../../hooks/useExchangeRates';
-import ExchangeRates from '../../models/ExchangeRates';
-import convertRate from '../../utils/ConvertRate';
-import { formatAmount } from '../../utils/FormatAmount';
 import CurrencyInput from '../CurrencyInput/CurrencyInput';
 import Currency from '../../models/Currency';
 import { Operation } from '../../models/Operation';
-import CurrencySelection from '../CurrencySelection/CurrencySelection';
+import CurrencySelection from '../CurrencySelection';
 import { InputPair, OperationSwitchWrapper, OperationSwitch } from './style';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
 
-// TODO: update exchange rate on currency change
 // TODO: extract colors to file
 
 type CurrencyInputConfig = {
@@ -34,39 +29,8 @@ function CurrencyInputPair({
     operation,
     onOperationChange,
 }: CurrencyInputPairProps) {
-    const exchangeRates = useExchangeRates();
     const [inputBeingChanged, setInputBeingChanged] =
         useState<CurrencyInputConfig | null>(null);
-
-    function handleValueChange(
-        newValue: string,
-        srcInput: CurrencyInputConfig,
-        destInput: CurrencyInputConfig
-    ) {
-        const formattedSrcValue = formatAmount(newValue);
-        srcInput.onValueChange(formattedSrcValue);
-
-        if (newValue) {
-            const convertedValue = convertRate(
-                +formatAmount(newValue),
-                srcInput.currency,
-                destInput.currency,
-                exchangeRates as ExchangeRates
-            );
-            const formattedDestValue = formatAmount(convertedValue);
-            destInput.onValueChange(formattedDestValue);
-        } else {
-            destInput.onValueChange('');
-        }
-    }
-
-    function handleFromValueChange(value: string): void {
-        handleValueChange(value, from, to);
-    }
-
-    function handleToValueChange(value: string): void {
-        handleValueChange(value, to, from);
-    }
 
     function handleCurrencyClick(input: CurrencyInputConfig) {
         setInputBeingChanged(input);
@@ -85,7 +49,7 @@ function CurrencyInputPair({
                     balance={from.balance}
                     value={from.value}
                     sign={operation === Operation.Buy ? '+' : '-'}
-                    onChange={handleFromValueChange}
+                    onChange={(value) => from.onValueChange(value)}
                     onCurrencyClick={() => handleCurrencyClick(from)}
                 ></CurrencyInput>
                 <OperationSwitchWrapper>
@@ -99,7 +63,7 @@ function CurrencyInputPair({
                     balance={to.balance}
                     value={to.value}
                     sign={operation === Operation.Sell ? '+' : '-'}
-                    onChange={handleToValueChange}
+                    onChange={(value) => to.onValueChange(value)}
                     onCurrencyClick={() => handleCurrencyClick(to)}
                 ></CurrencyInput>
             </InputPair>

@@ -21,9 +21,11 @@ import { useExchange } from '../../hooks/useExchange';
 import { useContext } from 'react';
 import { BalanceContext } from '../../utils/Contexts';
 import SuccessfulExchangeNotification from '../SuccessfulExchangeNotification';
+import Currency from '../../models/Currency';
+import { formatAmount } from '../../utils/FormatAmount';
 
-// TODO: update exchange rate on currency change
 // TODO: add loading screen
+// TODO: fix input validation
 
 function ExchangePage() {
     const { t } = useTranslation();
@@ -35,8 +37,8 @@ function ExchangePage() {
     const [fromValue, setFromValue] = useState('');
     const [toValue, setToValue] = useState('');
 
-    const [fromCurrency, setFromCurrency] = useState(availableCurrencies[1]);
-    const [toCurrency, setToCurrency] = useState(availableCurrencies[0]);
+    let [fromCurrency, setFromCurrency] = useState(availableCurrencies[1]);
+    let [toCurrency, setToCurrency] = useState(availableCurrencies[0]);
 
     const [getBalance, modifyBalance] = useContext(BalanceContext);
     const fromBalance = getBalance(fromCurrency);
@@ -71,6 +73,56 @@ function ExchangePage() {
         setIsSuccessNotificationOpen(true);
     }
 
+    function getUpdateValueFn(sourceInput: 'from' | 'to') {
+        return (newValue: string) => {
+            const srcCurrency =
+                sourceInput === 'from' ? fromCurrency : toCurrency;
+            const setSrcValue =
+                sourceInput === 'from' ? setFromValue : setToValue;
+
+            const destCurrency =
+                sourceInput === 'from' ? toCurrency : fromCurrency;
+            const setDestValue =
+                sourceInput === 'from' ? setToValue : setFromValue;
+
+            const formattedSrcValue = formatAmount(newValue);
+            setSrcValue(formattedSrcValue);
+
+            if (newValue) {
+                const convertedValue = convertRate(
+                    +formatAmount(newValue),
+                    srcCurrency,
+                    destCurrency,
+                    exchangeRates as ExchangeRates
+                );
+                const formattedDestValue = formatAmount(convertedValue);
+                setDestValue(formattedDestValue);
+            } else {
+                setDestValue('');
+            }
+        };
+    }
+    const updateFromValue = getUpdateValueFn('from');
+    const updateToValue = getUpdateValueFn('to');
+
+    function swapCurrencies() {
+        setFromCurrency(toCurrency);
+        setToCurrency(fromCurrency);
+        [fromCurrency, toCurrency] = [toCurrency, fromCurrency];
+    }
+
+    function updateFromCurrency(currency: Currency) {
+        currency === toCurrency ? swapCurrencies() : setFromCurrency(currency);
+        fromCurrency = currency;
+        updateFromValue(fromValue); //trigger rate recalculation
+    }
+
+    function updateToCurrency(currency: Currency) {
+        currency === fromCurrency ? swapCurrencies() : setToCurrency(currency);
+        toCurrency = currency;
+        updateToValue(toValue); //trigger rate recalculation
+    }
+
     if (!exchangeRates || !fromBalance || !toBalance) {
         return <div>Loading</div>;
     }
@@ -101,16 +153,16 @@ function ExchangePage() {
                             from={{
                                 balance: fromBalance,
                                 currency: fromCurrency,
-                                onCurrencyChange: setFromCurrency,
+                                onCurrencyChange: updateFromCurrency,
                                 value: fromValue,
-                                onValueChange: setFromValue,
+                                onValueChange: updateFromValue,
                             }}
                             to={{
                                 balance: toBalance,
                                 currency: toCurrency,
-                                onCurrencyChange: setToCurrency,
+                                onCurrencyChange: updateToCurrency,
                                 value: toValue,
-                                onValueChange: setToValue,
+                                onValueChange: updateToValue,
                             }}
                             operation={operation}
                             onOperationChange={toggleOperation}
