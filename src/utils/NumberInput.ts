@@ -1,16 +1,22 @@
 export function validateNumber(val: string) {
     const validSymbols = '0123456789.';
     const lastSymbol = val[val.length - 1];
+    const valArr = Array.from(val.toString());
     if (!lastSymbol) {
         return true;
     }
-    if (!validSymbols.includes(lastSymbol)) {
+    if (!valArr.every((c) => validSymbols.includes(c))) {
         return false;
     }
-    if (lastSymbol === '.' && val.slice(0, val.length - 1).includes('.')) {
-        // there are two dots
+
+    const dotAmount = valArr.reduce(
+        (amount, c) => amount + (c === '.' ? 1 : 0),
+        0
+    );
+    if (dotAmount > 1) {
         return false;
     }
+
     return true;
 }
 

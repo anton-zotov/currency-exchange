@@ -11,7 +11,9 @@ const validateNumberTestCases: TestCase[] = [
 
     { params: ['-'], result: false },
     { params: ['1a'], result: false },
+    { params: ['1a2'], result: false },
     { params: ['1..'], result: false },
+    { params: ['1..3'], result: false },
 ];
 testResults(validateNumberTestCases, validateNumber);
 

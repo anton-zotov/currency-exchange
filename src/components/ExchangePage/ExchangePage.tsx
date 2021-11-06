@@ -25,7 +25,6 @@ import Currency from '../../models/Currency';
 import { formatAmount } from '../../utils/FormatAmount';
 
 // TODO: add loading screen
-// TODO: fix input validation
 
 function ExchangePage() {
     const { t } = useTranslation();

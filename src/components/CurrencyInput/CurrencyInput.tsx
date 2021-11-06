@@ -59,6 +59,7 @@ function CurrencyInput({
                 <Input
                     value={value ? sign + value : value}
                     onChange={(e) => handleChange(e.target.value)}
+                    inputMode="numeric"
                     maxLength={13}
                     placeholder="0"
                 />
