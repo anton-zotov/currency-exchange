@@ -41,7 +41,7 @@ function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
 
     const currencyItems = availableCurrencies
         .filter(filterCurrenciesPredicate(query, t))
-        .map((currency) => (
+        .map(currency => (
             <CurrencyItem
                 key={currency.code}
                 onClick={() => onSelect(currency)}
@@ -81,7 +81,7 @@ function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
                         <Seach
                             value={query}
                             onBlur={handleBlur}
-                            onChange={(e) => setQuery(e.target.value)}
+                            onChange={e => setQuery(e.target.value)}
                             autoFocus={true}
                         ></Seach>
                     )}

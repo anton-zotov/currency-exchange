@@ -20,13 +20,11 @@ function useBalance(
             }),
             {}
         );
-        setBalance((balance) => {
-            return newBalance;
-        });
+        setBalance(newBalance);
     }, []);
 
     function modifyBalance(amount: number, currency: Currency) {
-        setBalance((balance) => {
+        setBalance(balance => {
             if (!balance || balance[currency.code] === null) {
                 throw new Error('balance is null');
             }

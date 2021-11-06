@@ -10,6 +10,6 @@ export const Colors = Object.freeze({
     ErrorText: '#ca534d',
     PrimaryText: '#c0c0c0',
     SecondaryText: '#c0c0c0',
-    DominantBackgroundText: "#fff",
+    DominantBackgroundText: '#fff',
     DominantText: '#1066dd',
 });

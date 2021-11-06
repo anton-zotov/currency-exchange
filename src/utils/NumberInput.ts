@@ -5,7 +5,7 @@ export function validateNumber(val: string) {
     if (!lastSymbol) {
         return true;
     }
-    if (!valArr.every((c) => validSymbols.includes(c))) {
+    if (!valArr.every(c => validSymbols.includes(c))) {
         return false;
     }
 

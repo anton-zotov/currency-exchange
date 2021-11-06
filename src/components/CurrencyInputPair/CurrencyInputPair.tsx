@@ -47,7 +47,7 @@ function CurrencyInputPair({
                     balance={from.balance}
                     value={from.value}
                     sign={operation === Operation.Buy ? '+' : '-'}
-                    onChange={(value) => from.onValueChange(value)}
+                    onChange={value => from.onValueChange(value)}
                     onCurrencyClick={() => handleCurrencyClick(from)}
                 ></CurrencyInput>
                 <OperationSwitchWrapper>
@@ -61,7 +61,7 @@ function CurrencyInputPair({
                     balance={to.balance}
                     value={to.value}
                     sign={operation === Operation.Sell ? '+' : '-'}
-                    onChange={(value) => to.onValueChange(value)}
+                    onChange={value => to.onValueChange(value)}
                     onCurrencyClick={() => handleCurrencyClick(to)}
                 ></CurrencyInput>
             </InputPair>
