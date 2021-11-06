@@ -1,5 +1,4 @@
 import React from 'react';
-import Balance from '../models/Balance';
 import Currency from '../models/Currency';
 
 export const BalanceContext = React.createContext<

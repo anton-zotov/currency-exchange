@@ -27,7 +27,7 @@ function SuccessfulExchangeNotification({
         const id = setTimeout(onClose, 2000);
 
         return () => clearTimeout(id);
-    }, []);
+    }, [onClose]);
 
     return (
         <Shadow>
