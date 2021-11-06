@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { IoMdArrowBack } from 'react-icons/io';
 import { Page } from '../../common-styles/page';
 import { availableCurrencies } from '../../config';
 import Currency from '../../models/Currency';
+import { BalanceContext } from '../../utils/Contexts';
 import { filterCurrenciesPredicate } from '../../utils/FilterCurrencies';
 import {
     CurrencyItem,
@@ -27,6 +28,7 @@ function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
     const { t } = useTranslation();
     const [query, setQuery] = useState('');
     const [isSearchFocused, setIsSearchFocused] = useState(true);
+    const [getBalance] = useContext(BalanceContext);
 
     function handleBlur() {
         setIsSearchFocused(false);
@@ -48,7 +50,9 @@ function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
                     <Logo src={`/img/${currency.code.toLowerCase()}.svg`} />
                 </LogoWrapper>
                 <div>
-                    <div>{currency.code}</div>
+                    <div>
+                        {currency.code} · {getBalance(currency)}
+                    </div>
                     <CurrencyLabel>
                         {t(`currency.${currency.label}`)}
                     </CurrencyLabel>
