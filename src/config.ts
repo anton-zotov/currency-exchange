@@ -11,6 +11,12 @@ export const availableCurrencies: Currency[] = [
         format: getFormatCurrency('left', 1),
     },
     {
+        code: 'GBP',
+        label: 'pound_sterling',
+        symbol: '£',
+        format: getFormatCurrency('left', 0),
+    },
+    {
         code: 'EUR',
         label: 'euro',
         symbol: '€',

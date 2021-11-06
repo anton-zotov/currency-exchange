@@ -37,7 +37,7 @@ function ExchangePage() {
     const [toValue, setToValue] = useState('');
 
     let [fromCurrency, setFromCurrency] = useState(availableCurrencies[1]);
-    let [toCurrency, setToCurrency] = useState(availableCurrencies[0]);
+    let [toCurrency, setToCurrency] = useState(availableCurrencies[2]);
 
     const [getBalance, modifyBalance] = useContext(BalanceContext);
     const fromBalance = getBalance(fromCurrency);
