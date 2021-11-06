@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Colors } from '../../common-styles/colors';
 
 export const Layout = styled.div`
     display: flex;
@@ -11,12 +12,12 @@ export const TopSection = styled.div``;
 
 export const ExchangeRate = styled.div`
     display: flex;
-    color: #2d5fa8;
+    color: ${Colors.DominantText};
     margin: 8px 0 16px 0;
 `;
 
 export const Title = styled.h1`
-    color: #c0c0c0;
+    color: ${Colors.PrimaryText};
 `;
 
 export const IconWrapper = styled.span`
@@ -32,13 +33,13 @@ export const ExchangeButton = styled.button`
     padding: 16px;
     border: none;
     border-radius: 20px;
-    color: #fff;
-    background-color: #0a84ff;
+    color: ${Colors.DominantBackgroundText};
+    background-color: ${Colors.DominantBackground};
     cursor: pointer;
 
     &:disabled {
-        color: #c0c0c0;
-        background-color: #021a34;
+        color: ${Colors.PrimaryText};
+        background-color: ${Colors.DominantBackgroundDisabled};
         cursor: default;
     }
 `;

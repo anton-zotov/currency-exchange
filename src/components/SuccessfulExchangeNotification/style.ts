@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Colors } from '../../common-styles/colors';
 
 export const Shadow = styled.div`
     display: flex;
@@ -9,13 +10,13 @@ export const Shadow = styled.div`
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: rgba(10, 10, 10, 0.5);
+    background-color: ${Colors.Shadow};
 `;
 
 export const Panel = styled.div`
     padding: 50px 0;
-    background-color: #1c1c1e;
-    color: #fff;
+    background-color: ${Colors.PanelBackground};
+    color: ${Colors.PrimaryText};
     border-radius: 20px;
     font-size: 20px;
     font-weight: 500;
@@ -25,12 +26,12 @@ export const Panel = styled.div`
 
 export const IconWrapper = styled.div`
     margin-bottom: 10px;
-    color: #0567ee;
+    color: ${Colors.DominantText};
     font-size: 80px;
     text-align: center;
 `;
 
 export const Summary = styled.div`
     margin-top: 8px;
-    color: #0567ee;
+    color: ${Colors.DominantText};
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Colors } from '../../common-styles/colors';
 
 export const CurrencyItem = styled.li`
     display: flex;
@@ -26,7 +27,7 @@ export const Wrapper = styled.div`
     height: 100vh;
     z-index: 100;
     background-color: black;
-    color: #c0c0c0;
+    color: ${Colors.PrimaryText};
 `;
 
 export const Header = styled.h2`
@@ -48,7 +49,7 @@ export const Seach = styled.input`
     padding-left: 6px;
     background-color: transparent;
     border: none;
-    color: #c0c0c0;
+    color: ${Colors.PrimaryText};
     font-size: 16px;
 `;
 

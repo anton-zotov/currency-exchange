@@ -6,8 +6,6 @@ import CurrencySelection from '../CurrencySelection';
 import { InputPair, OperationSwitchWrapper, OperationSwitch } from './style';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
 
-// TODO: extract colors to file
-
 type CurrencyInputConfig = {
     balance: number;
     currency: Currency;

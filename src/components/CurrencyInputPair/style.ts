@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Colors } from '../../common-styles/colors';
 
 export const InputPair = styled.div`
     display: flex;
@@ -17,7 +18,7 @@ export const OperationSwitch = styled.button`
     padding: 4px;
     border: none;
     border-radius: 100%;
-    background-color: #151515;
-    color: #2d5fa8;
+    background-color: ${Colors.ButtonBackground};
+    color: ${Colors.DominantText};
     cursor: pointer;
 `;
