@@ -16,7 +16,7 @@ function useBalance(
         const newBalance = availableCurrencies.reduce(
             (acc, currency) => ({
                 ...acc,
-                [currency.code]: Math.floor(Math.random() * 100000) / 100,
+                [currency.code]: Math.floor(Math.random() * 100000),
             }),
             {}
         );
@@ -39,7 +39,7 @@ function useBalance(
     }
 
     const getBalance = (currency: Currency) =>
-        balance ? balance[currency.code] : null;
+        balance ? balance[currency.code] / 100 : null;
 
     return [!balance, getBalance, modifyBalance];
 }

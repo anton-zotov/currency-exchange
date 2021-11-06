@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Page } from '../../common-styles/page';
 import { availableCurrencies } from '../../config';
-import useBalance from '../../hooks/useBalance';
 import useExchangeRates from '../../hooks/useExchangeRates';
 import ExchangeRates from '../../models/ExchangeRates';
 import convertRate from '../../utils/ConvertRate';
@@ -25,7 +24,6 @@ import SuccessfulExchangeNotification from '../SuccessfulExchangeNotification';
 
 // TODO: update exchange rate on currency change
 // TODO: add loading screen
-// TODO: store balance as whole numbers
 
 function ExchangePage() {
     const { t } = useTranslation();
@@ -69,7 +67,7 @@ function ExchangePage() {
     }
 
     function exchange() {
-        commitExchange(+fromValue);
+        commitExchange(+buyingAmount);
         setIsSuccessNotificationOpen(true);
     }
 
@@ -120,7 +118,7 @@ function ExchangePage() {
                     </TopSection>
                     <BottomSection>
                         <ExchangeButton
-                            disabled={isBalanceExceeded}
+                            disabled={isBalanceExceeded || !fromValue}
                             onClick={exchange}
                         >
                             {t(

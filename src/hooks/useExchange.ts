@@ -11,14 +11,17 @@ export function useExchange(
     const exchangeRates = useExchangeRates();
 
     return (buyAmount: number) => {
-        const sellAmount = +convertRate(
-            buyAmount,
-            fromCurrency,
-            toCurrency,
-            exchangeRates as ExchangeRates
+        const buyAmountRounded = Math.round(buyAmount * 100);
+        const sellAmountRounded = Math.round(
+            +convertRate(
+                buyAmountRounded,
+                fromCurrency,
+                toCurrency,
+                exchangeRates as ExchangeRates
+            )
         );
 
-        modifyBalance(buyAmount, fromCurrency);
-        modifyBalance(-sellAmount, toCurrency);
+        modifyBalance(buyAmountRounded, fromCurrency);
+        modifyBalance(-sellAmountRounded, toCurrency);
     };
 }
