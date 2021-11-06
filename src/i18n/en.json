@@ -10,6 +10,8 @@
         "united_states_dollar": "United States Dollar"
     },
     "exceed_balance": "Exceed balance",
+    "exchange_summary": "{{from}} to {{to}}",
     "sell": "Sell",
-    "sell_to": "Sell {{curOne}} to {{curTwo}}"
+    "sell_to": "Sell {{curOne}} to {{curTwo}}",
+    "you_exchanged": "You exchanged"
 }

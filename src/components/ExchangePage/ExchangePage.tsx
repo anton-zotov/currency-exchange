@@ -21,6 +21,7 @@ import { AiOutlineLineChart } from 'react-icons/ai';
 import { useExchange } from '../../hooks/useExchange';
 import { useContext } from 'react';
 import { BalanceContext } from '../../utils/Contexts';
+import SuccessfulExchangeNotification from '../SuccessfulExchangeNotification';
 
 // TODO: update exchange rate on currency change
 // TODO: add loading screen
@@ -30,6 +31,8 @@ function ExchangePage() {
     const { t } = useTranslation();
     const exchangeRates = useExchangeRates();
     const [operation, setOperation] = useState(Operation.Buy);
+    const [isSuccessNotificationOpen, setIsSuccessNotificationOpen] =
+        useState(false);
 
     const [fromValue, setFromValue] = useState('');
     const [toValue, setToValue] = useState('');
@@ -38,14 +41,20 @@ function ExchangePage() {
     const [toCurrency, setToCurrency] = useState(availableCurrencies[0]);
 
     const [getBalance, modifyBalance] = useContext(BalanceContext);
-    const fromBalance = getBalance?.(fromCurrency);
-    const toBalance = getBalance?.(toCurrency);
+    const fromBalance = getBalance(fromCurrency);
+    const toBalance = getBalance(toCurrency);
 
     const buyingCurrency =
         operation === Operation.Buy ? fromCurrency : toCurrency;
     const sellingCurrency =
         operation === Operation.Sell ? fromCurrency : toCurrency;
-    const commitExchange = useExchange(buyingCurrency, sellingCurrency, modifyBalance);
+    const buyingAmount = operation === Operation.Buy ? fromValue : toValue;
+    const sellingAmount = operation === Operation.Sell ? fromValue : toValue;
+    const commitExchange = useExchange(
+        buyingCurrency,
+        sellingCurrency,
+        modifyBalance
+    );
 
     const isFromBalanceExceeded =
         operation === Operation.Sell && +fromValue > (fromBalance || 0);
@@ -61,6 +70,7 @@ function ExchangePage() {
 
     function exchange() {
         commitExchange(+fromValue);
+        setIsSuccessNotificationOpen(true);
     }
 
     if (!exchangeRates || !fromBalance || !toBalance) {
@@ -126,6 +136,15 @@ function ExchangePage() {
                     </BottomSection>
                 </Layout>
             </Page>
+            {isSuccessNotificationOpen && (
+                <SuccessfulExchangeNotification
+                    fromCurrency={buyingCurrency}
+                    fromAmount={buyingAmount}
+                    toCurrency={sellingCurrency}
+                    toAmount={sellingAmount}
+                    onClose={() => setIsSuccessNotificationOpen(false)}
+                />
+            )}
         </>
     );
 }
