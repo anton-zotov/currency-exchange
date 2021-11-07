@@ -1,14 +1,15 @@
+import { useContext } from 'react';
 import Currency from '../models/Currency';
 import ExchangeRates from '../models/ExchangeRates';
+import { BalanceContext, ExchangeRatesContext } from '../utils/Contexts';
 import convertRate from '../utils/ConvertRate';
-import useExchangeRates from './useExchangeRates';
 
 export function useExchange(
     fromCurrency: Currency,
-    toCurrency: Currency,
-    modifyBalance: (amount: number, currency: Currency) => void
+    toCurrency: Currency
 ): (amount: number) => void {
-    const exchangeRates = useExchangeRates();
+    const exchangeRates = useContext(ExchangeRatesContext);
+    const [getBalance, modifyBalance] = useContext(BalanceContext);
 
     return (buyAmount: number) => {
         const buyAmountRounded = Math.round(buyAmount * 100);

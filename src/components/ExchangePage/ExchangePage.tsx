@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Page } from '../../common-styles/page';
 import { availableCurrencies } from '../../config';
-import useExchangeRates from '../../hooks/useExchangeRates';
 import ExchangeRates from '../../models/ExchangeRates';
 import convertRate from '../../utils/ConvertRate';
 import {
@@ -19,7 +18,7 @@ import CurrencyInputPair from '../CurrencyInputPair/CurrencyInputPair';
 import { AiOutlineLineChart } from 'react-icons/ai';
 import { useExchange } from '../../hooks/useExchange';
 import { useContext } from 'react';
-import { BalanceContext } from '../../utils/Contexts';
+import { BalanceContext, ExchangeRatesContext } from '../../utils/Contexts';
 import SuccessfulExchangeNotification from '../SuccessfulExchangeNotification';
 import Currency from '../../models/Currency';
 import { formatAmount } from '../../utils/FormatAmount';
@@ -28,10 +27,10 @@ import { formatAmount } from '../../utils/FormatAmount';
 
 function ExchangePage() {
     const { t } = useTranslation();
-    const exchangeRates = useExchangeRates();
     const [operation, setOperation] = useState(Operation.Buy);
     const [isSuccessNotificationOpen, setIsSuccessNotificationOpen] =
         useState(false);
+    const exchangeRates = useContext(ExchangeRatesContext);
 
     const [fromValue, setFromValue] = useState('');
     const [toValue, setToValue] = useState('');
@@ -39,7 +38,7 @@ function ExchangePage() {
     let [fromCurrency, setFromCurrency] = useState(availableCurrencies[1]);
     let [toCurrency, setToCurrency] = useState(availableCurrencies[2]);
 
-    const [getBalance, modifyBalance] = useContext(BalanceContext);
+    const [getBalance] = useContext(BalanceContext);
     const fromBalance = getBalance(fromCurrency);
     const toBalance = getBalance(toCurrency);
 
@@ -49,11 +48,7 @@ function ExchangePage() {
         operation === Operation.Sell ? fromCurrency : toCurrency;
     const buyingAmount = operation === Operation.Buy ? fromValue : toValue;
     const sellingAmount = operation === Operation.Sell ? fromValue : toValue;
-    const commitExchange = useExchange(
-        buyingCurrency,
-        sellingCurrency,
-        modifyBalance
-    );
+    const commitExchange = useExchange(buyingCurrency, sellingCurrency);
 
     const isFromBalanceExceeded =
         operation === Operation.Sell && +fromValue > (fromBalance || 0);

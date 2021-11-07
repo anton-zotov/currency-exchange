@@ -1,23 +1,27 @@
 import { availableCurrencies } from '../../config';
 import useBalance from '../../hooks/useBalance';
-import { BalanceContext } from '../../utils/Contexts';
+import useExchangeRates from '../../hooks/useExchangeRates';
+import { BalanceContext, ExchangeRatesContext } from '../../utils/Contexts';
 
 type LoadingPageProps = {
     children?: React.ReactNode;
 };
 
 function LoadingPage({ children }: LoadingPageProps) {
-    const [isLoading, getBalance, modifyBalance] = useBalance(
+    const [isBalanceLoading, getBalance, modifyBalance] = useBalance(
         availableCurrencies[0]
     );
+    const exchangeRates = useExchangeRates();
 
-    if (isLoading) {
+    if (isBalanceLoading || !exchangeRates) {
         return <div>Loading...</div>;
     }
 
     return (
         <BalanceContext.Provider value={[getBalance, modifyBalance]}>
-            {children}
+            <ExchangeRatesContext.Provider value={exchangeRates}>
+                {children}
+            </ExchangeRatesContext.Provider>
         </BalanceContext.Provider>
     );
 }
