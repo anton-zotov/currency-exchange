@@ -52,7 +52,7 @@ function CurrencyInput({
     }
 
     return (
-        <Wrapper hasError={isBalanceExceeded}>
+        <Wrapper hasError={isBalanceExceeded} role="group">
             <TopLine>
                 <CurrencyCode onClick={onCurrencyClick}>
                     {currency.code}
@@ -74,7 +74,9 @@ function CurrencyInput({
                 <span>
                     {t('balance')}: {balance}
                 </span>
-                {isBalanceExceeded && <Error>{t('exceed_balance')}</Error>}
+                {isBalanceExceeded && (
+                    <Error role="alert">{t('exceed_balance')}</Error>
+                )}
             </BottomLine>
         </Wrapper>
     );

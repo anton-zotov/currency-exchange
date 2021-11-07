@@ -14,9 +14,12 @@ export const TopLine = styled.div`
     color: ${Colors.PrimaryText};
 `;
 
-export const CurrencyCode = styled.span`
+export const CurrencyCode = styled.button`
     display: flex;
     margin-right: 10px;
+    background-color: transparent;
+    border: none;
+    color: ${Colors.PrimaryText};
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
