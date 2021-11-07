@@ -24,8 +24,6 @@ import Currency from '../../models/Currency';
 import { formatAmount } from '../../utils/FormatAmount';
 import { useEffect } from 'react';
 
-// TODO: add loading screen
-
 function ExchangePage() {
     const { t } = useTranslation();
     const [operation, setOperation] = useState(Operation.Buy);
