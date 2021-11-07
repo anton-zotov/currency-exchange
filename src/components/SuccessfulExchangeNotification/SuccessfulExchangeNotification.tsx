@@ -32,7 +32,7 @@ function SuccessfulExchangeNotification({
     return (
         <Shadow>
             <Page>
-                <Panel onClick={onClose}>
+                <Panel onClick={onClose} role="alertdialog">
                     <IconWrapper>
                         <BsCheckCircle></BsCheckCircle>
                     </IconWrapper>
