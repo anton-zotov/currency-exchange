@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { openExchangeRatesAppId } from '../config';
+import { openExchangeRatesUrl } from '../config';
 import ExchangeRates from '../models/ExchangeRates';
 
 // TODO: remove me
@@ -31,13 +31,11 @@ function useExchangeRates() {
             mockRates[k] = Math.random() * 50;
         }
         mockRates = { ...mockRates };
-        setExchangeRates(mockRates);
+        // setExchangeRates(mockRates);
         // TODO: add error processing
-        // fetch(
-        //     `https://openexchangerates.org/api/latest.json?app_id=${openExchangeRatesAppId}`
-        // )
-        //     .then(res => res.json())
-        //     .then(result => setExchangeRates(result.rates));
+        fetch(openExchangeRatesUrl)
+            .then(res => res.json())
+            .then(result => setExchangeRates(result.rates));
     }, [apiCallCount]);
 
     return exchangeRates;

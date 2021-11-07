@@ -1,7 +1,8 @@
 import Currency from './models/Currency';
 import { getFormatCurrency } from './utils/FormatCurrency';
 
-export const openExchangeRatesAppId = '3cabd2c7471b4b778cd0de69c5470fae';
+const openExchangeRatesAppId = '3cabd2c7471b4b778cd0de69c5470fae';
+export const openExchangeRatesUrl = `https://openexchangerates.org/api/latest.json?app_id=${openExchangeRatesAppId}`;
 
 export const availableCurrencies: Currency[] = [
     {
