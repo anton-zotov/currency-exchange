@@ -13,7 +13,7 @@ function useBalance(
     const [balance, setBalance] = useState<Balance | null>(null);
 
     useEffect(() => {
-        const newBalance = availableCurrencies.reduce(
+        const newBalance: Balance = availableCurrencies.reduce(
             (acc, currency) => ({
                 ...acc,
                 [currency.code]: Math.floor(Math.random() * 100000),
@@ -37,7 +37,7 @@ function useBalance(
     }
 
     const getBalance = (currency: Currency) =>
-        balance ? balance[currency.code] / 100 : null;
+        balance?.[currency.code] ? balance[currency.code] / 100 : null;
 
     return [!balance, getBalance, modifyBalance];
 }

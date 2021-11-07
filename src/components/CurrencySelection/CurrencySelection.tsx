@@ -41,24 +41,31 @@ function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
 
     const currencyItems = availableCurrencies
         .filter(filterCurrenciesPredicate(query, t))
-        .map(currency => (
-            <CurrencyItem
-                key={currency.code}
-                onClick={() => onSelect(currency)}
-            >
-                <LogoWrapper>
-                    <Logo src={`/img/${currency.code.toLowerCase()}.svg`} />
-                </LogoWrapper>
-                <div>
+        .map(currency => {
+            const currencyBalance = getBalance(currency);
+
+            return (
+                <CurrencyItem
+                    key={currency.code}
+                    onClick={() => onSelect(currency)}
+                >
+                    <LogoWrapper>
+                        <Logo src={`/img/${currency.code.toLowerCase()}.svg`} />
+                    </LogoWrapper>
                     <div>
-                        {currency.code} · {getBalance(currency)}
+                        <div>
+                            {currency.code}{' '}
+                            {currencyBalance && (
+                                <span>· {currencyBalance}</span>
+                            )}
+                        </div>
+                        <CurrencyLabel>
+                            {t(`currency.${currency.label}`)}
+                        </CurrencyLabel>
                     </div>
-                    <CurrencyLabel>
-                        {t(`currency.${currency.label}`)}
-                    </CurrencyLabel>
-                </div>
-            </CurrencyItem>
-        ));
+                </CurrencyItem>
+            );
+        });
 
     return (
         <Wrapper>
