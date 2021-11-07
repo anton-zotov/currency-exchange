@@ -19,6 +19,8 @@ type CurrencyInputProps = {
     value: string;
     onChange: (value: string) => void;
     onCurrencyClick: () => void;
+    onFocus: () => void;
+    onBlur: () => void;
 };
 
 function CurrencyInput({
@@ -28,6 +30,8 @@ function CurrencyInput({
     value,
     onChange,
     onCurrencyClick,
+    onFocus,
+    onBlur,
 }: CurrencyInputProps) {
     const { t } = useTranslation();
     const isBalanceExceeded = sign === '-' && +value > balance;
@@ -59,6 +63,8 @@ function CurrencyInput({
                 <Input
                     value={value ? sign + value : value}
                     onChange={e => handleChange(e.target.value)}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                     inputMode="numeric"
                     maxLength={13}
                     placeholder="0"

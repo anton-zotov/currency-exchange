@@ -18,6 +18,7 @@ type CurrencyInputPairProps = {
     from: CurrencyInputConfig;
     to: CurrencyInputConfig;
     operation: Operation;
+    onActiveInputChange: (input: 'from' | 'to' | null) => void;
     onOperationChange: () => void;
 };
 
@@ -26,6 +27,7 @@ function CurrencyInputPair({
     to,
     operation,
     onOperationChange,
+    onActiveInputChange,
 }: CurrencyInputPairProps) {
     const [inputBeingChanged, setInputBeingChanged] =
         useState<CurrencyInputConfig | null>(null);
@@ -39,6 +41,14 @@ function CurrencyInputPair({
         setInputBeingChanged(null);
     }
 
+    function handleFocus(input: 'from' | 'to') {
+        onActiveInputChange(input);
+    }
+
+    function handleBlur() {
+        onActiveInputChange(null);
+    }
+
     return (
         <>
             <InputPair>
@@ -49,6 +59,8 @@ function CurrencyInputPair({
                     sign={operation === Operation.Buy ? '+' : '-'}
                     onChange={value => from.onValueChange(value)}
                     onCurrencyClick={() => handleCurrencyClick(from)}
+                    onFocus={() => handleFocus('from')}
+                    onBlur={() => handleBlur()}
                 ></CurrencyInput>
                 <OperationSwitchWrapper>
                     <OperationSwitch onClick={() => onOperationChange()}>
@@ -63,6 +75,8 @@ function CurrencyInputPair({
                     sign={operation === Operation.Sell ? '+' : '-'}
                     onChange={value => to.onValueChange(value)}
                     onCurrencyClick={() => handleCurrencyClick(to)}
+                    onFocus={() => handleFocus('to')}
+                    onBlur={() => handleBlur()}
                 ></CurrencyInput>
             </InputPair>
             {inputBeingChanged && (

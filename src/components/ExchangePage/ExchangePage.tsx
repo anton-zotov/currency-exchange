@@ -22,6 +22,7 @@ import { BalanceContext, ExchangeRatesContext } from '../../utils/Contexts';
 import SuccessfulExchangeNotification from '../SuccessfulExchangeNotification';
 import Currency from '../../models/Currency';
 import { formatAmount } from '../../utils/FormatAmount';
+import { useEffect } from 'react';
 
 // TODO: add loading screen
 
@@ -30,6 +31,7 @@ function ExchangePage() {
     const [operation, setOperation] = useState(Operation.Buy);
     const [isSuccessNotificationOpen, setIsSuccessNotificationOpen] =
         useState(false);
+    const [activeInput, setActiveInput] = useState<'from' | 'to' | null>(null);
     const exchangeRates = useContext(ExchangeRatesContext);
 
     const [fromValue, setFromValue] = useState('');
@@ -49,6 +51,17 @@ function ExchangePage() {
     const buyingAmount = operation === Operation.Buy ? fromValue : toValue;
     const sellingAmount = operation === Operation.Sell ? fromValue : toValue;
     const commitExchange = useExchange(buyingCurrency, sellingCurrency);
+
+    useEffect(() => {
+        if (
+            activeInput === 'from' ||
+            (!activeInput && operation === Operation.Buy)
+        ) {
+            updateFromValue(fromValue); //trigger rate recalculation
+        } else {
+            updateToValue(toValue); //trigger rate recalculation
+        }
+    }, [exchangeRates]);
 
     const isFromBalanceExceeded =
         operation === Operation.Sell && +fromValue > (fromBalance || 0);
@@ -159,6 +172,7 @@ function ExchangePage() {
                                 onValueChange: updateToValue,
                             }}
                             operation={operation}
+                            onActiveInputChange={setActiveInput}
                             onOperationChange={toggleOperation}
                         ></CurrencyInputPair>
                     </TopSection>
