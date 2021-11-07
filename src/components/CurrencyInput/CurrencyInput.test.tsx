@@ -11,7 +11,7 @@ let onCurrencyClick: jest.Mock;
 let onFocus: jest.Mock;
 let onBlur: jest.Mock;
 
-function renderComponent(
+function setup(
     balance: number,
     currency: Currency,
     sign: '-' | '+',
@@ -41,7 +41,7 @@ beforeEach(() => {
 });
 
 it('renders currency code and balance', () => {
-    renderComponent(100, availableCurrencies[0], '+', '10');
+    setup(100, availableCurrencies[0], '+', '10');
 
     expect(screen.getByRole('group')).toHaveTextContent(
         `${availableCurrencies[0].code}Balance: 100`
@@ -51,7 +51,7 @@ it('renders currency code and balance', () => {
 describe('when balance is exceeded', () => {
     describe('and sign is -', () => {
         it('renders balance exceeded message', () => {
-            renderComponent(100, availableCurrencies[0], '-', '1000');
+            setup(100, availableCurrencies[0], '-', '1000');
 
             expect(screen.getByRole('alert')).toHaveTextContent(
                 'Exceed balance'
@@ -64,7 +64,7 @@ describe('when balance is exceeded', () => {
 
     describe('and sign is +', () => {
         it("doesn't render balance exceeded message", () => {
-            renderComponent(100, availableCurrencies[0], '+', '1000');
+            setup(100, availableCurrencies[0], '+', '1000');
 
             expect(screen.queryByRole('alert')).toBeNull();
             expect(screen.getByRole('group')).not.toHaveStyle(
@@ -75,14 +75,14 @@ describe('when balance is exceeded', () => {
 });
 
 it('sets the input value with the sign', () => {
-    renderComponent(100, availableCurrencies[0], '+', '1000');
+    setup(100, availableCurrencies[0], '+', '1000');
 
     expect(screen.getByRole('textbox')).toHaveValue('+1000');
 });
 
 describe('when a correct value is inputted', () => {
     it('triggers onChange', () => {
-        renderComponent(100, availableCurrencies[0], '+', '10');
+        setup(100, availableCurrencies[0], '+', '10');
 
         fireEvent.change(screen.getByRole('textbox'), {
             target: { value: '100.23' },
@@ -92,7 +92,7 @@ describe('when a correct value is inputted', () => {
     });
 
     it('prettifies the value', () => {
-        renderComponent(100, availableCurrencies[0], '+', '10');
+        setup(100, availableCurrencies[0], '+', '10');
 
         fireEvent.change(screen.getByRole('textbox'), {
             target: { value: '.' },
@@ -104,7 +104,7 @@ describe('when a correct value is inputted', () => {
 
 describe('when an incorrect value is inputted', () => {
     it("doesn't trigger onChange", () => {
-        renderComponent(100, availableCurrencies[0], '+', '10');
+        setup(100, availableCurrencies[0], '+', '10');
 
         fireEvent.change(screen.getByRole('textbox'), {
             target: { value: '10a0.23' },
@@ -115,7 +115,7 @@ describe('when an incorrect value is inputted', () => {
 });
 
 it('triggers onCurrencyClick', () => {
-    renderComponent(100, availableCurrencies[0], '+', '10');
+    setup(100, availableCurrencies[0], '+', '10');
 
     fireEvent.click(screen.getByRole('button'));
 
@@ -123,7 +123,7 @@ it('triggers onCurrencyClick', () => {
 });
 
 it('triggers onFocus', () => {
-    renderComponent(100, availableCurrencies[0], '+', '10');
+    setup(100, availableCurrencies[0], '+', '10');
 
     fireEvent.focus(screen.getByRole('textbox'));
 
@@ -131,7 +131,7 @@ it('triggers onFocus', () => {
 });
 
 it('triggers onBlur', () => {
-    renderComponent(100, availableCurrencies[0], '+', '10');
+    setup(100, availableCurrencies[0], '+', '10');
 
     fireEvent.blur(screen.getByRole('textbox'));
 

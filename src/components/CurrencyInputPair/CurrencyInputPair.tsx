@@ -51,7 +51,7 @@ function CurrencyInputPair({
 
     return (
         <>
-            <InputPair>
+            <InputPair role="region">
                 <CurrencyInput
                     currency={from.currency}
                     balance={from.balance}
@@ -63,9 +63,16 @@ function CurrencyInputPair({
                     onBlur={() => handleBlur()}
                 ></CurrencyInput>
                 <OperationSwitchWrapper>
-                    <OperationSwitch onClick={() => onOperationChange()}>
-                        {operation === Operation.Buy && <BsArrowUp />}
-                        {operation === Operation.Sell && <BsArrowDown />}
+                    <OperationSwitch
+                        onClick={() => onOperationChange()}
+                        data-testid="operation"
+                    >
+                        {operation === Operation.Buy && (
+                            <BsArrowUp data-testid="arrow-up" />
+                        )}
+                        {operation === Operation.Sell && (
+                            <BsArrowDown data-testid="arrow-down" />
+                        )}
                     </OperationSwitch>
                 </OperationSwitchWrapper>
                 <CurrencyInput

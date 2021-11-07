@@ -17,7 +17,7 @@ export const Logo = styled.img`
     border-radius: 100%;
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.dialog`
     display: flex;
     justify-content: center;
     position: fixed;
