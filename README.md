@@ -2,6 +2,8 @@
 
 This project models a currency exchange application. It uses real exchange raget provided by https://openexchangerates.org
 
+The deployed application is available at https://anton-zotov.github.io/currency-exchange/
+
 ## Available Scripts
 
 In the project directory, you can run:

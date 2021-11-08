@@ -2,6 +2,7 @@
     "name": "currency-exchange",
     "version": "0.1.1",
     "private": true,
+    "homepage": "https://anton-zotov.github.io/currency-exchange/",
     "dependencies": {
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^12.1.2",
@@ -25,7 +26,7 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
         "extends": [
@@ -47,6 +48,7 @@
     },
     "devDependencies": {
         "@types/styled-components": "^5.1.15",
+        "gh-pages": "^3.2.3",
         "msw": "^0.35.0",
         "prettier": "^2.4.1"
     },
