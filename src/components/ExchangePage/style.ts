@@ -51,6 +51,7 @@ export const ExchangeButton = styled.button`
     color: ${Colors.DominantBackgroundText};
     background-color: ${Colors.DominantBackground};
     cursor: pointer;
+    font-size: 16px;
 
     &:disabled {
         color: ${Colors.PrimaryText};
