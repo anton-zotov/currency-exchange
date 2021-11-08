@@ -14,6 +14,7 @@ const testCases: TestCase[] = [
 
     { params: ['', true], result: '' },
     { params: ['0', true], result: '0' },
+    { params: ['100.0033', true], result: '100' },
     { params: ['123', true], result: '123' },
     { params: ['123.', true], result: '123' },
     { params: ['123.0', true], result: '123' },

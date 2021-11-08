@@ -5,7 +5,7 @@ export function formatAmount(amount: string | number, removeZeros = false) {
 
     let slicePos = Math.min(dotIndex + 3, amountStr.length);
     if (removeZeros) {
-        while (slicePos > 1 && ['0', '.'].includes(amountStr[slicePos - 1])) {
+        while (slicePos > dotIndex && ['0', '.'].includes(amountStr[slicePos - 1])) {
             slicePos--;
         }
     }
