@@ -72,11 +72,11 @@ it('shows correct balance', () => {
 it('shows converted amount', () => {
     changeFromValue('1');
 
-    expect(inputs[1]).toHaveValue('-0.78');
+    expect(inputs[1]).toHaveValue('-0.79');
 });
 
 it('shows exchange rate', () => {
-    expect(screen.getByTestId('exchange-rate')).toHaveTextContent('£1 = €0.78');
+    expect(screen.getByTestId('exchange-rate')).toHaveTextContent('£1 = €0.7895');
 });
 
 it('shows success notification on exhcnage', () => {
@@ -88,7 +88,7 @@ it('shows success notification on exhcnage', () => {
     expect(screen.getByRole('alertdialog')).toBeTruthy();
     expect(screen.getByRole('alertdialog')).toHaveTextContent(
         `You exchanged${availableCurrencies[2].format(
-            0.78
+            0.79
         )} to ${availableCurrencies[1].format(1)}`
     );
 });
@@ -121,7 +121,7 @@ it('sells after changing operation', () => {
     fireEvent.click(screen.getByTestId('exchange-button'));
 
     expect(balances[0]).toHaveTextContent('Balance: 199');
-    expect(balances[1]).toHaveTextContent('Balance: 300.78');
+    expect(balances[1]).toHaveTextContent('Balance: 300.79');
 });
 
 it('shows correct currencies', () => {
@@ -170,5 +170,5 @@ it('updates converted amount after currency change', () => {
     fireEvent.click(screen.getAllByTestId('change-currency-button')[0]);
     fireEvent.click(screen.getAllByRole('listitem')[0]);
 
-    expect(inputs[1]).toHaveValue('-0.04');
+    expect(inputs[1]).toHaveValue('-0.05');
 });

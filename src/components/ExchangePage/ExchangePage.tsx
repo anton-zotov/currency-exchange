@@ -105,7 +105,10 @@ function ExchangePage() {
                     destCurrency,
                     exchangeRates as ExchangeRates
                 );
-                const formattedDestValue = formatAmount(convertedValue, true);
+                const formattedDestValue = formatAmount(
+                    (+convertedValue).toFixed(2),
+                    true
+                );
                 setDestValue(formattedDestValue);
             } else {
                 setDestValue('');
