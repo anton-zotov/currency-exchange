@@ -39,7 +39,7 @@ it('renders currencies and amounts', () => {
 it('calls onClose after 2 secons', () => {
     expect(onClose).not.toHaveBeenCalled();
 
-    jest.advanceTimersByTime(2000);
+    jest.advanceTimersByTime(2500);
 
     expect(onClose).toHaveBeenCalled();
 });

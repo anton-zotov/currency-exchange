@@ -24,7 +24,7 @@ function SuccessfulExchangeNotification({
     const { t } = useTranslation();
 
     useEffect(() => {
-        const id = setTimeout(onClose, 2000);
+        const id = setTimeout(onClose, 2500);
 
         return () => clearTimeout(id);
     }, [onClose]);
