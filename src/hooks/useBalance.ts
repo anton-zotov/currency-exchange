@@ -3,9 +3,7 @@ import { availableCurrencies } from '../config';
 import Balance from '../models/Balance';
 import Currency from '../models/Currency';
 
-function useBalance(
-    currency: Currency
-): [
+function useBalance(): [
     boolean,
     (currency: Currency) => number | null,
     (amount: number, currency: Currency) => void
