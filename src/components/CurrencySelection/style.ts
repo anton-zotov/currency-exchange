@@ -28,6 +28,7 @@ export const Wrapper = styled.dialog`
     z-index: 100;
     background-color: black;
     color: ${Colors.PrimaryText};
+    border: none;
 `;
 
 export const Header = styled.h2`
