@@ -55,7 +55,7 @@ function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
                     <div>
                         <div>
                             {currency.code}{' '}
-                            {currencyBalance && (
+                            {(currencyBalance || null) && (
                                 <span>· {currencyBalance}</span>
                             )}
                         </div>
