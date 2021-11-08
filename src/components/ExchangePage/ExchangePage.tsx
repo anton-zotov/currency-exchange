@@ -61,7 +61,7 @@ function ExchangePage() {
         } else {
             updateToValue(toValue); //trigger rate recalculation
         }
-    }, [exchangeRates]);
+    }, [exchangeRates, fromCurrency, toCurrency]);
 
     const isFromBalanceExceeded =
         operation === Operation.Sell && +fromValue > (fromBalance || 0);
@@ -123,14 +123,10 @@ function ExchangePage() {
 
     function updateFromCurrency(currency: Currency) {
         currency === toCurrency ? swapCurrencies() : setFromCurrency(currency);
-        fromCurrency = currency;
-        updateFromValue(fromValue); //trigger rate recalculation
     }
 
     function updateToCurrency(currency: Currency) {
         currency === fromCurrency ? swapCurrencies() : setToCurrency(currency);
-        toCurrency = currency;
-        updateToValue(toValue); //trigger rate recalculation
     }
 
     if (fromBalance === null || toBalance === null) return <div></div>;
@@ -147,7 +143,10 @@ function ExchangePage() {
             <Page>
                 <Wrapper>
                     {areRatesStale && (
-                        <ErrorNotification role="alert" data-testid="stale-rates-notification">
+                        <ErrorNotification
+                            role="alert"
+                            data-testid="stale-rates-notification"
+                        >
                             {t('stale_rates_notification')}
                         </ErrorNotification>
                     )}
