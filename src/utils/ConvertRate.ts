@@ -1,7 +1,7 @@
 import Currency from '../models/Currency';
 import ExchangeRates from '../models/ExchangeRates';
 
-function convertRate(
+export function convertRate(
     amount: number,
     from: Currency,
     to: Currency,
@@ -10,5 +10,3 @@ function convertRate(
     const amountUSD = amount / exchangeRates[from.code];
     return (amountUSD * exchangeRates[to.code]).toFixed(4);
 }
-
-export default convertRate;

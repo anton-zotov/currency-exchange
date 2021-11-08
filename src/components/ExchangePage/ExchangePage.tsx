@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Page } from '../../common-styles/page';
 import { availableCurrencies } from '../../config';
 import ExchangeRates from '../../models/ExchangeRates';
-import convertRate from '../../utils/ConvertRate';
+import { convertRate } from '../../utils/ConvertRate';
 import {
     BottomSection,
     ExchangeButton,
@@ -13,10 +13,10 @@ import {
     Title,
     TopSection,
 } from './style';
-import { Operation } from '../../models/Operation';
-import CurrencyInputPair from '../CurrencyInputPair/CurrencyInputPair';
+import Operation from '../../models/Operation';
+import CurrencyInputPair from '../CurrencyInputPair';
 import { AiOutlineLineChart } from 'react-icons/ai';
-import { useExchange } from '../../hooks/useExchange';
+import useExchange from '../../hooks/useExchange';
 import { useContext } from 'react';
 import { BalanceContext, ExchangeRatesContext } from '../../utils/Contexts';
 import SuccessfulExchangeNotification from '../SuccessfulExchangeNotification';

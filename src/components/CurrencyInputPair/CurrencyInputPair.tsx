@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CurrencyInput from '../CurrencyInput/CurrencyInput';
+import CurrencyInput from '../CurrencyInput';
 import Currency from '../../models/Currency';
-import { Operation } from '../../models/Operation';
+import Operation from '../../models/Operation';
 import CurrencySelection from '../CurrencySelection';
 import { InputPair, OperationSwitchWrapper, OperationSwitch } from './style';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';

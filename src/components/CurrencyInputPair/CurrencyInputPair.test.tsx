@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import { availableCurrencies } from '../../config';
 import i18n from '../../i18n';
-import { Operation } from '../../models/Operation';
+import Operation from '../../models/Operation';
 import CurrencyInputPair from './CurrencyInputPair';
 
 let onFromCurrencyChange: jest.Mock;

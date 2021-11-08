@@ -1,5 +1,5 @@
 import ExchangeRates from '../models/ExchangeRates';
-import convertRate from './ConvertRate';
+import { convertRate } from './ConvertRate';
 import { TestCase, testResults } from './TestHelper';
 
 const exchangeRates: ExchangeRates = {

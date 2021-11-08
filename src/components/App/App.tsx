@@ -1,6 +1,6 @@
 import React from 'react';
 import DataProvider from '../DataProvider';
-import ExchangePage from '../ExchangePage/ExchangePage';
+import ExchangePage from '../ExchangePage';
 import { Container } from './style';
 
 function App() {

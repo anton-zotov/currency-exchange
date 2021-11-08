@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import Currency from '../models/Currency';
 import ExchangeRates from '../models/ExchangeRates';
 import { BalanceContext, ExchangeRatesContext } from '../utils/Contexts';
-import convertRate from '../utils/ConvertRate';
+import { convertRate } from '../utils/ConvertRate';
 
-export function useExchange(
+function useExchange(
     fromCurrency: Currency,
     toCurrency: Currency
 ): (amount: number) => void {
@@ -26,3 +26,5 @@ export function useExchange(
         modifyBalance(-sellAmountRounded, toCurrency);
     };
 }
+
+export default useExchange;
