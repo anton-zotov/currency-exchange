@@ -144,10 +144,31 @@ it('shows correct currencies', () => {
     );
 });
 
+it('swaps currencies when another field has the same as newly selected', () => {
+    fireEvent.click(screen.getAllByTestId('change-currency-button')[0]);
+    fireEvent.click(screen.getAllByRole('listitem')[2]);
+
+    expect(
+        screen.getAllByTestId('change-currency-button')[0]
+    ).toHaveTextContent(availableCurrencies[2].code);
+    expect(
+        screen.getAllByTestId('change-currency-button')[1]
+    ).toHaveTextContent(availableCurrencies[1].code);
+});
+
 it('shows stale rates notification', () => {
     expect(screen.queryByTestId('stale-rates-notification')).toBeNull();
 
     rerender(boilerplate(true));
 
     expect(screen.getByTestId('stale-rates-notification')).toBeTruthy();
+});
+
+it('updates converted amount after currency change', () => {
+    changeFromValue('1');
+
+    fireEvent.click(screen.getAllByTestId('change-currency-button')[0]);
+    fireEvent.click(screen.getAllByRole('listitem')[0]);
+
+    expect(inputs[1]).toHaveValue('-0.04');
 });
