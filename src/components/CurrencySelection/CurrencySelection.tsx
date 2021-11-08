@@ -50,7 +50,11 @@ function CurrencySelection({ onClose, onSelect }: CurrencySelectionProps) {
                     onClick={() => onSelect(currency)}
                 >
                     <LogoWrapper>
-                        <Logo src={`/img/${currency.code.toLowerCase()}.svg`} />
+                        <Logo
+                            src={`${
+                                process.env.PUBLIC_URL
+                            }/img/${currency.code.toLowerCase()}.svg`}
+                        />
                     </LogoWrapper>
                     <div>
                         <div>
