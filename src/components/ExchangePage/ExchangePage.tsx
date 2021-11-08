@@ -128,9 +128,7 @@ function ExchangePage() {
         updateToValue(toValue); //trigger rate recalculation
     }
 
-    if (!exchangeRates || !fromBalance || !toBalance) {
-        return <div>Loading</div>;
-    }
+    if (fromBalance === null || toBalance === null) return <div></div>;
 
     const priceForOneUnit = convertRate(
         1,
@@ -147,7 +145,7 @@ function ExchangePage() {
                         <Title>
                             {t(operation)} {fromCurrency.code}
                         </Title>
-                        <ExchangeRate>
+                        <ExchangeRate data-testid="exchange-rate">
                             <IconWrapper>
                                 <AiOutlineLineChart />
                             </IconWrapper>
@@ -178,6 +176,7 @@ function ExchangePage() {
                         <ExchangeButton
                             disabled={isBalanceExceeded || !fromValue}
                             onClick={exchange}
+                            data-testid="exchange-button"
                         >
                             {t(
                                 operation === Operation.Buy
