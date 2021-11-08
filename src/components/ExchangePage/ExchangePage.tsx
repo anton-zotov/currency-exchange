@@ -204,10 +204,10 @@ function ExchangePage() {
             </Page>
             {isSuccessNotificationOpen && (
                 <SuccessfulExchangeNotification
-                    fromCurrency={buyingCurrency}
-                    fromAmount={buyingAmount}
-                    toCurrency={sellingCurrency}
-                    toAmount={sellingAmount}
+                    fromCurrency={sellingCurrency}
+                    fromAmount={sellingAmount}
+                    toCurrency={buyingCurrency}
+                    toAmount={buyingAmount}
                     onClose={() => setIsSuccessNotificationOpen(false)}
                 />
             )}

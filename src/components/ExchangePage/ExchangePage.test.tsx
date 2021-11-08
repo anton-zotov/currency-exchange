@@ -87,9 +87,9 @@ it('shows success notification on exhcnage', () => {
 
     expect(screen.getByRole('alertdialog')).toBeTruthy();
     expect(screen.getByRole('alertdialog')).toHaveTextContent(
-        `You exchanged${availableCurrencies[1].format(
-            1
-        )} to ${availableCurrencies[2].format(0.78)}`
+        `You exchanged${availableCurrencies[2].format(
+            0.78
+        )} to ${availableCurrencies[1].format(1)}`
     );
 });
 
