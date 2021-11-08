@@ -12,7 +12,7 @@ function useExchangeRates(): [ExchangeRates | null, boolean] {
     useEffect(() => {
         const intervalId = setInterval(
             () => setApiCallCount(count => count + 1),
-            3000
+            10000
         );
         return () => clearInterval(intervalId);
     }, []);
