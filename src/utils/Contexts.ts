@@ -9,4 +9,6 @@ export const BalanceContext = React.createContext<
     ]
 >([(c: Currency) => null, (amount: number, currency: Currency) => {}]);
 
-export const ExchangeRatesContext = React.createContext<ExchangeRates>({});
+export const ExchangeRatesContext = React.createContext<
+    [ExchangeRates, boolean]
+>([{}, false]);

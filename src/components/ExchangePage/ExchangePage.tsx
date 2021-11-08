@@ -6,12 +6,14 @@ import ExchangeRates from '../../models/ExchangeRates';
 import { convertRate } from '../../utils/ConvertRate';
 import {
     BottomSection,
+    ErrorNotification,
     ExchangeButton,
     ExchangeRate,
     IconWrapper,
     Layout,
     Title,
     TopSection,
+    Wrapper,
 } from './style';
 import Operation from '../../models/Operation';
 import CurrencyInputPair from '../CurrencyInputPair';
@@ -30,7 +32,7 @@ function ExchangePage() {
     const [isSuccessNotificationOpen, setIsSuccessNotificationOpen] =
         useState(false);
     const [activeInput, setActiveInput] = useState<'from' | 'to' | null>(null);
-    const exchangeRates = useContext(ExchangeRatesContext);
+    const [exchangeRates, areRatesStale] = useContext(ExchangeRatesContext);
 
     const [fromValue, setFromValue] = useState('');
     const [toValue, setToValue] = useState('');
@@ -66,6 +68,9 @@ function ExchangePage() {
     const isToBalanceExceeded =
         operation === Operation.Buy && +toValue > (toBalance || 0);
     const isBalanceExceeded = isFromBalanceExceeded || isToBalanceExceeded;
+
+    const isExchangeButtonDisabled =
+        isBalanceExceeded || !fromValue || areRatesStale;
 
     function toggleOperation() {
         const newOperation =
@@ -140,56 +145,63 @@ function ExchangePage() {
     return (
         <>
             <Page>
-                <Layout>
-                    <TopSection>
-                        <Title>
-                            {t(operation)} {fromCurrency.code}
-                        </Title>
-                        <ExchangeRate data-testid="exchange-rate">
-                            <IconWrapper>
-                                <AiOutlineLineChart />
-                            </IconWrapper>
-                            {fromCurrency.format(1)} ={' '}
-                            {toCurrency.format(priceForOneUnit)}
-                        </ExchangeRate>
-                        <CurrencyInputPair
-                            from={{
-                                balance: fromBalance,
-                                currency: fromCurrency,
-                                onCurrencyChange: updateFromCurrency,
-                                value: fromValue,
-                                onValueChange: updateFromValue,
-                            }}
-                            to={{
-                                balance: toBalance,
-                                currency: toCurrency,
-                                onCurrencyChange: updateToCurrency,
-                                value: toValue,
-                                onValueChange: updateToValue,
-                            }}
-                            operation={operation}
-                            onActiveInputChange={setActiveInput}
-                            onOperationChange={toggleOperation}
-                        ></CurrencyInputPair>
-                    </TopSection>
-                    <BottomSection>
-                        <ExchangeButton
-                            disabled={isBalanceExceeded || !fromValue}
-                            onClick={exchange}
-                            data-testid="exchange-button"
-                        >
-                            {t(
-                                operation === Operation.Buy
-                                    ? 'buy_with'
-                                    : 'sell_to',
-                                {
-                                    curOne: fromCurrency.code,
-                                    curTwo: toCurrency.code,
-                                }
-                            )}
-                        </ExchangeButton>
-                    </BottomSection>
-                </Layout>
+                <Wrapper>
+                    {areRatesStale && (
+                        <ErrorNotification role="alert" data-testid="stale-rates-notification">
+                            {t('stale_rates_notification')}
+                        </ErrorNotification>
+                    )}
+                    <Layout>
+                        <TopSection>
+                            <Title>
+                                {t(operation)} {fromCurrency.code}
+                            </Title>
+                            <ExchangeRate data-testid="exchange-rate">
+                                <IconWrapper>
+                                    <AiOutlineLineChart />
+                                </IconWrapper>
+                                {fromCurrency.format(1)} ={' '}
+                                {toCurrency.format(priceForOneUnit)}
+                            </ExchangeRate>
+                            <CurrencyInputPair
+                                from={{
+                                    balance: fromBalance,
+                                    currency: fromCurrency,
+                                    onCurrencyChange: updateFromCurrency,
+                                    value: fromValue,
+                                    onValueChange: updateFromValue,
+                                }}
+                                to={{
+                                    balance: toBalance,
+                                    currency: toCurrency,
+                                    onCurrencyChange: updateToCurrency,
+                                    value: toValue,
+                                    onValueChange: updateToValue,
+                                }}
+                                operation={operation}
+                                onActiveInputChange={setActiveInput}
+                                onOperationChange={toggleOperation}
+                            ></CurrencyInputPair>
+                        </TopSection>
+                        <BottomSection>
+                            <ExchangeButton
+                                disabled={isExchangeButtonDisabled}
+                                onClick={exchange}
+                                data-testid="exchange-button"
+                            >
+                                {t(
+                                    operation === Operation.Buy
+                                        ? 'buy_with'
+                                        : 'sell_to',
+                                    {
+                                        curOne: fromCurrency.code,
+                                        curTwo: toCurrency.code,
+                                    }
+                                )}
+                            </ExchangeButton>
+                        </BottomSection>
+                    </Layout>
+                </Wrapper>
             </Page>
             {isSuccessNotificationOpen && (
                 <SuccessfulExchangeNotification

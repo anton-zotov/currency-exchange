@@ -13,7 +13,7 @@ function DataProvider({ children }: DataProviderProps) {
     const [isBalanceLoading, getBalance, modifyBalance] = useBalance(
         availableCurrencies[0]
     );
-    const exchangeRates = useExchangeRates();
+    const [exchangeRates, areRatesStale] = useExchangeRates();
 
     if (isBalanceLoading || !exchangeRates) {
         return <LoadingPage />;
@@ -21,7 +21,7 @@ function DataProvider({ children }: DataProviderProps) {
 
     return (
         <BalanceContext.Provider value={[getBalance, modifyBalance]}>
-            <ExchangeRatesContext.Provider value={exchangeRates}>
+            <ExchangeRatesContext.Provider value={[exchangeRates, areRatesStale]}>
                 {children}
             </ExchangeRatesContext.Provider>
         </BalanceContext.Provider>

@@ -13,10 +13,21 @@ let inputs: HTMLElement[];
 let balances: HTMLElement[];
 let changeFromValue: (value: string) => void;
 let changeToValue: (value: string) => void;
+let rerender: any;
 
 const getBalance = (currency: Currency) => balance[currency.code] / 100;
 const modifyBalance = (amount: number, currency: Currency) =>
     (balance[currency.code] += amount);
+
+const boilerplate = (areRatesStale: boolean) => (
+    <I18nextProvider i18n={i18n}>
+        <BalanceContext.Provider value={[getBalance, modifyBalance]}>
+            <ExchangeRatesContext.Provider value={[mockRates, areRatesStale]}>
+                <ExchangePage />;
+            </ExchangeRatesContext.Provider>
+        </BalanceContext.Provider>
+    </I18nextProvider>
+);
 
 async function setup() {
     balance = availableCurrencies.reduce(
@@ -27,18 +38,11 @@ async function setup() {
         {}
     );
 
-    render(
-        <I18nextProvider i18n={i18n}>
-            <BalanceContext.Provider value={[getBalance, modifyBalance]}>
-                <ExchangeRatesContext.Provider value={mockRates}>
-                    <ExchangePage />;
-                </ExchangeRatesContext.Provider>
-            </BalanceContext.Provider>
-        </I18nextProvider>
-    );
+    const renderResult = render(boilerplate(false));
 
     await waitFor(() => screen.getAllByRole('textbox'));
 
+    rerender = renderResult.rerender;
     inputs = screen.getAllByRole('textbox');
     balances = screen.getAllByTestId('balance');
 
@@ -138,4 +142,12 @@ it('shows correct currencies', () => {
     expect(screen.getByTestId('exchange-button')).toHaveTextContent(
         `Buy ${availableCurrencies[0].code} with ${availableCurrencies[3].code}`
     );
+});
+
+it('shows stale rates notification', () => {
+    expect(screen.queryByTestId('stale-rates-notification')).toBeNull();
+
+    rerender(boilerplate(true));
+
+    expect(screen.getByTestId('stale-rates-notification')).toBeTruthy();
 });

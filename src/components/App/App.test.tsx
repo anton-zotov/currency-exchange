@@ -6,7 +6,7 @@ import { openExchangeRatesUrl } from '../../config';
 import { mockRates } from '../../utils/Mocks';
 
 const server = setupServer(
-    rest.get(openExchangeRatesUrl, (req, res, ctx) => {
+    rest.get(openExchangeRatesUrl.split('?')[0], (req, res, ctx) => {
         return res(ctx.json({ rates: mockRates }));
     })
 );

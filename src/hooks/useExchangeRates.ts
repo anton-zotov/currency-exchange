@@ -2,20 +2,12 @@ import { useEffect, useState } from 'react';
 import { openExchangeRatesUrl } from '../config';
 import ExchangeRates from '../models/ExchangeRates';
 
-// TODO: remove me
-let mockRates = {
-    EUR: 0.9,
-    USD: 1,
-    PLN: 3.9,
-    CZK: 19,
-    GBP: 1.14,
-} as any;
-
-function useExchangeRates() {
+function useExchangeRates(): [ExchangeRates | null, boolean] {
     const [exchangeRates, setExchangeRates] = useState<ExchangeRates | null>(
         null
     );
     const [apiCallCount, setApiCallCount] = useState(1);
+    const [areStale, setAreStale] = useState(false);
 
     useEffect(() => {
         const intervalId = setInterval(
@@ -26,19 +18,14 @@ function useExchangeRates() {
     }, []);
 
     useEffect(() => {
-        // TODO: remove me
-        for (let k in mockRates) {
-            mockRates[k] = Math.random() * 50;
-        }
-        mockRates = { ...mockRates };
-        // setExchangeRates(mockRates);
-        // TODO: add error processing
-        fetch(openExchangeRatesUrl)
+        fetch(`${openExchangeRatesUrl}&random=${Math.random()}`)
             .then(res => res.json())
-            .then(result => setExchangeRates(result.rates));
+            .then(result => setExchangeRates(result.rates))
+            .then(() => setAreStale(false))
+            .catch(() => setAreStale(true));
     }, [apiCallCount]);
 
-    return exchangeRates;
+    return [exchangeRates, areStale];
 }
 
 export default useExchangeRates;

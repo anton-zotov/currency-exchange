@@ -1,6 +1,21 @@
 import styled from 'styled-components';
 import { Colors } from '../../common-styles/colors';
 
+export const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+`;
+
+export const ErrorNotification = styled.div`
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: ${Colors.ErrorNotificationBackground};
+    border-radius: 10px;
+    color: ${Colors.DominantBackgroundText};
+    text-align: center;
+`;
+
 export const Layout = styled.div`
     display: flex;
     flex-direction: column;

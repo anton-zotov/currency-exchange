@@ -8,7 +8,7 @@ function useExchange(
     fromCurrency: Currency,
     toCurrency: Currency
 ): (amount: number) => void {
-    const exchangeRates = useContext(ExchangeRatesContext);
+    const [exchangeRates] = useContext(ExchangeRatesContext);
     const [getBalance, modifyBalance] = useContext(BalanceContext);
 
     return (buyAmount: number) => {

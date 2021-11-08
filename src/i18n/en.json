@@ -12,6 +12,7 @@
     },
     "exceed_balance": "Exceed balance",
     "exchange_summary": "{{from}} to {{to}}",
+    "stale_rates_notification": "Couldn't get the latest rates. Trying to update...",
     "sell": "Sell",
     "sell_to": "Sell {{curOne}} to {{curTwo}}",
     "you_exchanged": "You exchanged"
