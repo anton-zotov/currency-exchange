@@ -1,6 +1,6 @@
 {
     "name": "currency-exchange",
-    "version": "0.1.1",
+    "version": "1.0.0",
     "private": true,
     "homepage": "https://anton-zotov.github.io/currency-exchange/",
     "dependencies": {
